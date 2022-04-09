@@ -15,9 +15,7 @@ public class consideration {
     public consideration(int consideration_id) {
         this.consideration_id = consideration_id;
     }
-    
-    
-    
+       
     public int getConsideration_id() {
         return consideration_id;
     }
