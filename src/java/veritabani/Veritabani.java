@@ -25,6 +25,19 @@ agrement_id integer primary key not null,
 	users_id integer references users(users_id)
 );
 
+create table hotels
+(
+hotels_id integer primary key not null,
+	hotel_date date,
+	hotel_area  varchar ,
+	users_id integer references users(users_id)
+);
 
+    create table kullanici_deger
+(
+kullanici_deger_id integer primary key not null,
+	users_id integer references users(users_id),
+	consideration_id integer references consideration(consideration_id) 
+);
 */
 }
