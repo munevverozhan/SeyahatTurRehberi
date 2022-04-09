@@ -70,6 +70,26 @@ create table kullanici_tatil
 	
 	
 );
+    create table holidays
+(
+holidays_id integer primary key not null,
+	type_id integer,
+	holiday_date date,
+	
+	admins_id integer references admins(admins_id)
+);
+create table consideration 
+(
+consideration_id integer primary key not null
+    
+);
+create table tours_car
+(
+tours_car_id integer primary key not null,
+	car_type varchar ,
+	driver_name varchar 
+);
+
 
 
     
