@@ -49,19 +49,22 @@ users_id integer primary key not null,
 	last_name varchar
 	
 
-);    
-    create table proposal
+); 
+    
+create table proposal
 (
 proposal_id integer primary key not null,
 	type_id integer
 );
-    create table tour_guide
+    
+create table tour_guide
 (
 tour_guide_id integer primary key not null,
 	guide_name varchar ,
 	guide_language varchar,
 	holidays_id integer references holidays(holidays_id)
 );
+
 create table kullanici_tatil
 (
 	kullanici_tatil_id integer primary key not null,
@@ -70,7 +73,8 @@ create table kullanici_tatil
 	
 	
 );
-    create table holidays
+    
+create table holidays
 (
 holidays_id integer primary key not null,
 	type_id integer,
@@ -78,16 +82,25 @@ holidays_id integer primary key not null,
 	
 	admins_id integer references admins(admins_id)
 );
+    
 create table consideration 
 (
 consideration_id integer primary key not null
     
 );
+    
 create table tours_car
 (
 tours_car_id integer primary key not null,
 	car_type varchar ,
 	driver_name varchar 
+);
+    
+create table tur_oneri
+(
+tur_oneri_id integer primary key not null,
+	tour_guide_id integer references tour_guide(tour_guide_id),
+	proposal_id integer references proposal(proposal_id)
 );
 
 
