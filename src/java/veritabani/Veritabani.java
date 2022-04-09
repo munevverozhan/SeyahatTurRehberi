@@ -50,5 +50,28 @@ users_id integer primary key not null,
 	
 
 );    
+    create table proposal
+(
+proposal_id integer primary key not null,
+	type_id integer
+);
+    create table tour_guide
+(
+tour_guide_id integer primary key not null,
+	guide_name varchar ,
+	guide_language varchar,
+	holidays_id integer references holidays(holidays_id)
+);
+create table kullanici_tatil
+(
+	kullanici_tatil_id integer primary key not null,
+    holidays_id integer references holidays(holidays_id),
+	users_id integer references users(users_id)
+	
+	
+);
+
+
+    
 */
 }
