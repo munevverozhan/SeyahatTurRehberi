@@ -13,6 +13,16 @@ public class admins {
     private String mail;
     private String  passwords;
 
+    public admins() {
+    }
+
+    public admins(int admins_id, String mail, String passwords) {
+        this.admins_id = admins_id;
+        this.mail = mail;
+        this.passwords = passwords;
+    }
+    
+
     public int getAdmins_id() {
         return admins_id;
     }

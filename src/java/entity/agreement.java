@@ -14,6 +14,15 @@ public class agreement {
     private int agreement_id;
     private Date agreement_date;
 
+    public agreement() {
+    }
+
+    public agreement(int agreement_id, Date agreement_date) {
+        this.agreement_id = agreement_id;
+        this.agreement_date = agreement_date;
+    }
+    
+
     public int getAgreement_id() {
         return agreement_id;
     }

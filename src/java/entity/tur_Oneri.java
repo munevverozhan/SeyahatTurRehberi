@@ -22,7 +22,9 @@ public class tur_Oneri {
     public tur_Oneri(int tur_oneri_id) {
         this.tur_oneri_id = tur_oneri_id;
     }
-    
+
+    public tur_Oneri() {
+    }
     
     
 }
