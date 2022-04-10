@@ -16,6 +16,11 @@ public class holidays {
     private int type_id;
     private Date holidays_date;
 
+    public holidays() {
+    }
+    
+    
+
     public holidays(int holidays_id, int type_id, Date holidays_date) {
         this.holidays_id = holidays_id;
         this.type_id = type_id;

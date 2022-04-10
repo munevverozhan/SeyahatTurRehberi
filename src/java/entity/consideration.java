@@ -12,6 +12,10 @@ public class consideration {
     
     private int consideration_id;
 
+    public consideration() {
+    }
+    
+
     public consideration(int consideration_id) {
         this.consideration_id = consideration_id;
     }
