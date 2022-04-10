@@ -27,6 +27,12 @@ public class holidays {
         this.holidays_date = holidays_date;
     }
 
+    public holidays(int type_id, Date holidays_date) {
+        this.type_id = type_id;
+        this.holidays_date = holidays_date;
+    }
+    
+
     public int getHolidays_id() {
         return holidays_id;
     }
