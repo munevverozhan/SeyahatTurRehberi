@@ -22,7 +22,7 @@ public class agreementDAO extends DBConnection {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "insert into admins(mail,passwords) values('" + c.getAgreement_date() + "')";
+            String query = "insert into agreement(agreement_date) values('" + c.getAgreement_date() + "')";
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -35,7 +35,7 @@ public class agreementDAO extends DBConnection {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "delete from admins where admins_id=" + c.getAgreement_date();
+            String query = "delete from agreement where agreement_id=" + c.getAgreement_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -47,7 +47,7 @@ public class agreementDAO extends DBConnection {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "update admins set mail='" + c.getAgreement_date() + "' where  admins_id=" + c.getAgreement_id();
+            String query = "update agreement set agreement_date='" + c.getAgreement_date() + "' where  agreement_id=" + c.getAgreement_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -60,7 +60,7 @@ public class agreementDAO extends DBConnection {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "select * from admins";
+            String query = "select * from agreement";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 agreementList.add(new agreement(rs.getInt("agreement_id"), rs.getDate("agreement_date")));

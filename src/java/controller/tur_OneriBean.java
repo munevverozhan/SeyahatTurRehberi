@@ -5,6 +5,7 @@
 package controller;
 
 import dao.tur_OneriDAO;
+import entity.agreement;
 import entity.tur_Oneri;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -30,6 +31,9 @@ public class tur_OneriBean implements Serializable {
     private List<tur_Oneri> list;
 
     public tur_Oneri getEntity() {
+        if (this.entity == null) {
+            this.entity = new tur_Oneri();
+        }
         return entity;
     }
 
@@ -38,6 +42,9 @@ public class tur_OneriBean implements Serializable {
     }
 
     public tur_OneriDAO getDao() {
+        if (this.dao == null) {
+            this.dao = new tur_OneriDAO();
+        }
         return dao;
     }
 
@@ -46,6 +53,7 @@ public class tur_OneriBean implements Serializable {
     }
 
     public List<tur_Oneri> getList() {
+        this.list = this.getDao().getTur_OneriList();
         return list;
     }
 

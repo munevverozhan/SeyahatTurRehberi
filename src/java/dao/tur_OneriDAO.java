@@ -35,7 +35,7 @@ public class tur_OneriDAO extends DBConnection {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "select * from admins";
+            String query = "select * from tur_Oneri";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 tur_OneriList.add(new tur_Oneri(rs.getInt("tur_oneri_id")));
