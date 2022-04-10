@@ -4,22 +4,17 @@
  */
 package util;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 
 /**
  *
  * @author munevver
  */
 public abstract class DBConnection {
-    
-    
-    
 
     public Connection connect() {
-        Connection c=null;
+        Connection c = null;
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Tur", "postgres", "12345");

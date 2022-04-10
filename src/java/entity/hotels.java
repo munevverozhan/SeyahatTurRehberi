@@ -45,4 +45,8 @@ public class hotels {
     public void setHotel_area(String hotel_area) {
         this.hotel_area = hotel_area;
     }
+
+    public String getDate() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
