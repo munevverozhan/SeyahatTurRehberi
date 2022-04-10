@@ -9,6 +9,7 @@ package entity;
  * @author aysetunc
  */
 public class kullanici_tatil {
+
     private int kullanici_tatil;
 
     public kullanici_tatil() {
@@ -17,8 +18,6 @@ public class kullanici_tatil {
     public kullanici_tatil(int kullanici_tatil) {
         this.kullanici_tatil = kullanici_tatil;
     }
-    
-    
 
     public int getKullanici_tatil() {
         return kullanici_tatil;
@@ -27,5 +26,5 @@ public class kullanici_tatil {
     public void setKullanici_tatil(int kullanici_tatil) {
         this.kullanici_tatil = kullanici_tatil;
     }
-    
+
 }

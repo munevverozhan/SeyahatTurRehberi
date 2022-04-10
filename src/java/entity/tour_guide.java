@@ -10,20 +10,18 @@ package entity;
  */
 public class tour_guide {
 
-    public tour_guide() {
-    }
-    
     private int tour_guide_id;
     private String guide_name;
     private String guide_language;
+
+    public tour_guide() {
+    }
 
     public tour_guide(int tour_guide_id, String guide_name, String guide_language) {
         this.tour_guide_id = tour_guide_id;
         this.guide_name = guide_name;
         this.guide_language = guide_language;
     }
-    
-    
 
     public int getTour_guide_id() {
         return tour_guide_id;
@@ -48,5 +46,5 @@ public class tour_guide {
     public void setGuide_language(String guide_language) {
         this.guide_language = guide_language;
     }
-    
+
 }

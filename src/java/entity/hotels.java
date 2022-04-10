@@ -11,18 +11,16 @@ import java.util.Date;
  * @author serpl
  */
 public class hotels {
+
     private int hotels_id;
     private Date hotel_date;
-    private String  hotel_area;
+    private String hotel_area;
 
     public hotels(int hotels_id, Date hotel_date, String hotel_area) {
         this.hotels_id = hotels_id;
         this.hotel_date = hotel_date;
         this.hotel_area = hotel_area;
     }
-    
-    
-    
 
     public int getHotels_id() {
         return hotels_id;

@@ -10,20 +10,17 @@ package entity;
  */
 public class proposal {
 
-    public proposal() {
-    }
-    
     private int proposal_id;
     private int type_id;
-    
+
+    public proposal() {
+    }
 
     public proposal(int proposal_id, int type_id) {
         this.proposal_id = proposal_id;
         this.type_id = type_id;
     }
 
-    
-    
     public int getProposal_id() {
         return proposal_id;
     }
@@ -39,5 +36,5 @@ public class proposal {
     public void setType_id(int type_id) {
         this.type_id = type_id;
     }
-    
+
 }

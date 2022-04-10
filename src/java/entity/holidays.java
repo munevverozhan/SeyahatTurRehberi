@@ -11,7 +11,8 @@ import java.util.Date;
  * @author DELL
  */
 public class holidays {
-     private int holidays_id;
+
+    private int holidays_id;
     private int type_id;
     private Date holidays_date;
 
@@ -20,8 +21,6 @@ public class holidays {
         this.type_id = type_id;
         this.holidays_date = holidays_date;
     }
-    
-    
 
     public int getHolidays_id() {
         return holidays_id;

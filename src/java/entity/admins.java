@@ -9,9 +9,10 @@ package entity;
  * @author munevver
  */
 public class admins {
+
     private int admins_id;
     private String mail;
-    private String  passwords;
+    private String passwords;
 
     public admins() {
     }
@@ -21,7 +22,6 @@ public class admins {
         this.mail = mail;
         this.passwords = passwords;
     }
-    
 
     public int getAdmins_id() {
         return admins_id;

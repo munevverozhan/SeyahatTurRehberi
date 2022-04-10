@@ -11,6 +11,7 @@ package entity;
 import java.util.Date;
 
 public class agreement {
+
     private int agreement_id;
     private Date agreement_date;
 
@@ -21,7 +22,6 @@ public class agreement {
         this.agreement_id = agreement_id;
         this.agreement_date = agreement_date;
     }
-    
 
     public int getAgreement_id() {
         return agreement_id;
