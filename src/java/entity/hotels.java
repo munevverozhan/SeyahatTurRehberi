@@ -16,6 +16,9 @@ public class hotels {
     private Date hotel_date;
     private String hotel_area;
 
+    public hotels() {
+    }
+
     public hotels(int hotels_id, Date hotel_date, String hotel_area) {
         this.hotels_id = hotels_id;
         this.hotel_date = hotel_date;

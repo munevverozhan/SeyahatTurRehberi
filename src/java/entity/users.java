@@ -9,6 +9,7 @@ package entity;
  * @author serpl
  */
 public class users {
+
     private int users_id;
     private String mail;
     private String password;
@@ -18,7 +19,6 @@ public class users {
     public users() {
     }
 
-    
     public users(int users_id, String mail, String password, String first_name, String last_name) {
         this.users_id = users_id;
         this.mail = mail;
@@ -27,7 +27,6 @@ public class users {
         this.last_name = last_name;
     }
 
-    
     public int getUsers_id() {
         return users_id;
     }
@@ -67,6 +66,5 @@ public class users {
     public void setLast_name(String last_name) {
         this.last_name = last_name;
     }
-    
-    
+
 }

@@ -9,7 +9,11 @@ package entity;
  * @author serpl
  */
 public class kullanici_deger {
-    private int  kullanici_deger_id;
+
+    private int kullanici_deger_id;
+
+    public kullanici_deger() {
+    }
 
     public kullanici_deger(int kullanici_deger_id) {
         this.kullanici_deger_id = kullanici_deger_id;
