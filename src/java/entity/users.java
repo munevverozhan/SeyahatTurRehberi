@@ -15,6 +15,10 @@ public class users {
     private String first_name;
     private String last_name;
 
+    public users() {
+    }
+
+    
     public users(int users_id, String mail, String password, String first_name, String last_name) {
         this.users_id = users_id;
         this.mail = mail;
