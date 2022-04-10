@@ -4,9 +4,7 @@
  */
 package controller;
 
-import dao.adminsDAO;
 import dao.tur_OneriDAO;
-import entity.admins;
 import entity.tur_Oneri;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
