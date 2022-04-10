@@ -11,6 +11,9 @@ package entity;
 public class kullanici_tatil {
     private int kullanici_tatil;
 
+    public kullanici_tatil() {
+    }
+
     public kullanici_tatil(int kullanici_tatil) {
         this.kullanici_tatil = kullanici_tatil;
     }

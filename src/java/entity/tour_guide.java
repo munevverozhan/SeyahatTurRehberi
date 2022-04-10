@@ -9,6 +9,10 @@ package entity;
  * @author aysetunc
  */
 public class tour_guide {
+
+    public tour_guide() {
+    }
+    
     private int tour_guide_id;
     private String guide_name;
     private String guide_language;

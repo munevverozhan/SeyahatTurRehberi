@@ -9,8 +9,13 @@ package entity;
  * @author aysetunc
  */
 public class proposal {
+
+    public proposal() {
+    }
+    
     private int proposal_id;
     private int type_id;
+    
 
     public proposal(int proposal_id, int type_id) {
         this.proposal_id = proposal_id;
