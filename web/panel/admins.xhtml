@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Facelet Title</title>
+    </head>
+    <body>
+
+        id: #{adminsBean.entity.admins_id}
+        mail:  #{adminsBean.entity.mail}
+        password:  #{adminsBean.entity.passwords}
+
+        <h:form>
+            mail:  <h:inputText value="#{adminsBean.entity.mail}"/>
+            sifre: <h:inputText value="#{adminsBean.entity.passwords}"/>
+            <h:commandButton rendered="#{adminsBean.entity.admins_id==0}"  action="#{adminsBean.create}" value ="create"/>
+            <h:commandButton rendered="#{adminsBean.entity.admins_id!=0}"  action="#{adminsBean.update}" value ="update"/>
+            <h:commandButton rendered="#{categoryBean.entity.id!=0}" action="#{adminsyBean.clear}" value="Clear Form"/>
+
+        </h:form>
+        <h:form>
+            <h:dataTable border="1" value="#{adminsBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{c.admins_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">MAIL</f:facet>
+                        #{c.mail}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">PASSWORD</f:facet>
+                        #{c.passwords}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">DELETE</f:facet>
+                    <h:commandButton action="#{adminsBean.delete(c)}" value ="sil"/>
+                    <h:commandButton action="#{adminsBean.setEntity(c)}" value ="edit"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+    </body>
+</html>
+

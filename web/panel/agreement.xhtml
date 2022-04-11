@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Facelet Title</title>
+    </head>
+    <body>
+
+        id: #{agremeentBean.entity.agremeent_id}
+        date:  #{agremeentBean.entity.agremeent_date}
+       
+        <h:form>
+           
+            date: <h:inputText value="#{agremeentBean.entity.agremeent_date}"/>
+            <h:commandButton rendered="#{agremeentBean.entity.agremeent_id==0}"  action="#{agremeentBean.create}" value ="create"/>
+            <h:commandButton rendered="#{agremeentBean.entity.agremeent_id!=0}"  action="#{agremeentBean.update}" value ="update"/>
+            <h:commandButton rendered="#{agremeentBean.entity.id!=0}" action="#{agremeentBean.clear}" value="Clear Form"/>
+
+        </h:form>
+        <h:form>
+            <h:dataTable border="1" value="#{agremeentBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{c.agremeent_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">DATE</f:facet>
+                        #{c.agremeent_date}
+                </h:column>
+              
+
+                <h:column>
+                    <f:facet name="header">DELETE</f:facet>
+                    <h:commandButton action="#{agremeentBean.delete(c)}" value ="sil"/>
+                    <h:commandButton action="#{agremeentBean.setEntity(c)}" value ="edit"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+    </body>
+</html>
