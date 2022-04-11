@@ -12,6 +12,8 @@ public class hotels {
     private int hotels_id;
     private Date hotel_date;
     private String hotel_area;
+    private int user_id;
+    
 
     public hotels() {
     }
@@ -20,6 +22,21 @@ public class hotels {
         this.hotels_id = hotels_id;
         this.hotel_date = hotel_date;
         this.hotel_area = hotel_area;
+    }
+
+    public hotels(int hotels_id, Date hotel_date, String hotel_area, int user_id) {
+        this.hotels_id = hotels_id;
+        this.hotel_date = hotel_date;
+        this.hotel_area = hotel_area;
+        this.user_id = user_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getHotels_id() {
