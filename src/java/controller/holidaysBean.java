@@ -61,11 +61,11 @@ public class holidaysBean implements Serializable {
         this.list = list;
     }
 
-    public String create() {
+    public void create() {
 
         this.getDao().createHolidays(entity);
         this.entity = new holidays();
-        return "index";
+        
     }
 
     public void delete(holidays c) {

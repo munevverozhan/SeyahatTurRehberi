@@ -57,11 +57,11 @@ public class hotelsBean implements Serializable {
         this.list = list;
     }
 
-    public String create() {
+    public void create() {
 
         this.getDao().createHotels(entity);
         this.entity = new hotels();
-        return "index";
+        
     }
 
     public void delete(hotels c) {

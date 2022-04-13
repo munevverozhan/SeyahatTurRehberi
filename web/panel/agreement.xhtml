@@ -4,37 +4,57 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>Facelet Title</title>
+        <title> Agreement</title>
     </head>
     <body>
-
-        id: #{agremeentBean.entity.agremeent_id}
-        date:  #{agremeentBean.entity.agremeent_date}
-       
         <h:form>
-           
-            date: <h:inputText value="#{agremeentBean.entity.agremeent_date}"/>
-            <h:commandButton rendered="#{agremeentBean.entity.agremeent_id==0}"  action="#{agremeentBean.create}" value ="create"/>
-            <h:commandButton rendered="#{agremeentBean.entity.agremeent_id!=0}"  action="#{agremeentBean.update}" value ="update"/>
-            <h:commandButton rendered="#{agremeentBean.entity.id!=0}" action="#{agremeentBean.clear}" value="Clear Form"/>
+            <h:commandButton action="/index" value="Home"/>
 
         </h:form>
+        <hr/>
+
+
+
         <h:form>
-            <h:dataTable border="1" value="#{agremeentBean.list}" var="c">
+            users: <h:selectOneMenu value="#{agreementBean.entity.users}" converter="usersConverter">
+                <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}">
+                </f:selectItems>
+            </h:selectOneMenu>
+
+            date: <h:inputText value="#{agreementBean.entity.agreement_date}"/>
+            name: <h:inputText value="#{agreementBean.entity.name}"/>
+
+            <h:commandButton rendered="#{agreementBean.entity.agreement_id==0}"  action="#{agreementBean.create}" value ="create"/>
+            <h:commandButton rendered="#{agreementBean.entity.agreement_id!=0}"  action="#{agreementBean.update}" value ="update"/>
+
+        </h:form>
+        <hr/>
+
+
+        <h:form>
+            <h:dataTable border="1" value="#{agreementBean.list}" var="c">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
-                        #{c.agremeent_id}
+                        #{c.agreement_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                        #{c.name}
                 </h:column>
                 <h:column>
                     <f:facet name="header">DATE</f:facet>
-                        #{c.agremeent_date}
+                        #{c.agreement_date}
                 </h:column>
-              
+                <h:column>
+                    <f:facet name="header">FIRST NAME</f:facet>
+                        #{entity.users.first_name}
+                </h:column>
+
 
                 <h:column>
-                    <f:facet name="header">DELETE</f:facet>
-                    <h:commandButton action="#{agremeentBean.delete(c)}" value ="sil"/>
-                    <h:commandButton action="#{agremeentBean.setEntity(c)}" value ="edit"/>
+                    <f:facet name="header">ADMINISTRATION</f:facet>
+                    <h:commandButton action="#{agreementBean.delete(c)}" value ="sil"/>
+                    <h:commandButton action="#{agreementBean.setEntity(c)}" value ="edit"/>
                 </h:column>
 
             </h:dataTable>

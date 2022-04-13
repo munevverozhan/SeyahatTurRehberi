@@ -60,11 +60,11 @@ public class agreementBean implements Serializable {
         this.list = list;
     }
 
-    public String create() {
+    public void create() {
 
-        this.getDao().createAgreement(entity);
+        this.getDao().create(entity);
         this.entity = new agreement();
-        return "index";
+        
     }
 
     public void delete(agreement c) {

@@ -5,6 +5,7 @@
 package dao;
 
 import entity.agreement;
+import entity.users;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -17,12 +18,14 @@ import util.DBConnection;
  * @author munevver
  */
 public class agreementDAO extends DBConnection {
+    
+    private usersDAO usersDao;
 
-    public String createAgreement(agreement c) {
+    public String create(agreement c) {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "insert into agreement(agreement_date) values('" + c.getAgreement_date() + "')";
+            String query = "insert into agreement(name,agreement_date,users_id) values('"+c.getName()+"'," + c.getAgreement_date() + "',"+c.getUsers().getUsers_id()+")";
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -47,7 +50,7 @@ public class agreementDAO extends DBConnection {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "update agreement set agreement_date='" + c.getAgreement_date() + "' where  agreement_id=" + c.getAgreement_id();
+            String query = "update agreement set name='"+c.getName()+"',agreement_date='" + c.getAgreement_date() + "',"+c.getUsers().getUsers_id()+" where  agreement_id=" + c.getAgreement_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -63,7 +66,8 @@ public class agreementDAO extends DBConnection {
             String query = "select * from agreement";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                agreementList.add(new agreement(rs.getInt("agreement_id"), rs.getDate("agreement_date")));
+                users u=this.getUsersDao().findByID(rs.getInt("users_id"));
+                agreementList.add(new agreement(rs.getInt("agreement_id"), rs.getString("name"),rs.getDate("agreement_date"),u));
 
             }
 
@@ -72,4 +76,13 @@ public class agreementDAO extends DBConnection {
         }
         return agreementList;
     }
+
+    public usersDAO getUsersDao() {
+        return usersDao;
+    }
+
+    public void setUsersDao(usersDAO usersDao) {
+        this.usersDao = usersDao;
+    }
+    
 }

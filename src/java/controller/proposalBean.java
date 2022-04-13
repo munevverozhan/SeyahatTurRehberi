@@ -64,11 +64,11 @@ public class proposalBean implements Serializable {
         this.list = list;
     }
 
-    public String create() {
+    public void create() {
 
         this.getDao().createProposal(entity);
         this.entity = new proposal();
-        return "index";
+       
     }
 
     public void delete(proposal c) {

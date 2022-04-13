@@ -7,17 +7,20 @@
         <title>Facelet Title</title>
     </head>
     <body>
+        <h:form>
+            <h:commandButton action="/index" value="Home"/>
 
-        id: #{adminsBean.entity.admins_id}
-        mail:  #{adminsBean.entity.mail}
-        password:  #{adminsBean.entity.passwords}
+        </h:form>
+        <hr/>
+
+
 
         <h:form>
             mail:  <h:inputText value="#{adminsBean.entity.mail}"/>
             sifre: <h:inputText value="#{adminsBean.entity.passwords}"/>
             <h:commandButton rendered="#{adminsBean.entity.admins_id==0}"  action="#{adminsBean.create}" value ="create"/>
             <h:commandButton rendered="#{adminsBean.entity.admins_id!=0}"  action="#{adminsBean.update}" value ="update"/>
-            <h:commandButton rendered="#{categoryBean.entity.id!=0}" action="#{adminsyBean.clear}" value="Clear Form"/>
+            <h:commandButton rendered="#{adminsBean.entity.admins_id!=0}" action="#{adminsBean.clear}" value="Clear Form"/>
 
         </h:form>
         <h:form>

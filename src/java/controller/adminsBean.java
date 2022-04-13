@@ -59,11 +59,11 @@ public class adminsBean implements Serializable {
         this.list = list;
     }
 
-    public String create() {
+    public void create() {
 
         this.getDao().createAdmins(entity);
         this.entity = new admins();
-        return "index";
+
     }
 
     public void delete(admins c) {

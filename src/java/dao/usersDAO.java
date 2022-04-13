@@ -16,7 +16,25 @@ import util.DBConnection;
  * @author serpl
  */
 public class usersDAO extends DBConnection{
-      public String createUsers(users c) {
+     public users findByID(int users_id){
+        users c=null;
+        try {
+            Connection connect = this.connect();
+                  
+            String query = "select * from users where users_id="+users_id;
+            Statement st = connect.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                c=(new users(rs.getInt("users_id"), rs.getString("mail"),rs.getString("password"),rs.getString("first_name"),rs.getString("last_name")));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return c;
+        
+    }
+      public void createUsers(users c) {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
@@ -26,7 +44,7 @@ public class usersDAO extends DBConnection{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "index";
+        
     }
 
     public void delete(users c) {

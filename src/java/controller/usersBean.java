@@ -60,11 +60,11 @@ public class usersBean implements Serializable {
         this.list = list;
     }
 
-    public String create() {
+    public void create() {
 
         this.getDao().createUsers(entity);
         this.entity = new users();
-        return "index";
+        
     }
 
     public void delete(users c) {
