@@ -14,13 +14,13 @@ public class agreement { //anlaşma
 
     private int agreement_id;
     private String name;
-    private Date agreement_date;   
+    private String agreement_date;   
     private users users;
 
     public agreement() {
     }
 
-    public agreement(int agreement_id, String name, Date agreement_date, users users) {
+    public agreement(int agreement_id, String name, String agreement_date, users users) {
         this.agreement_id = agreement_id;
         this.name = name;
         this.agreement_date = agreement_date;
@@ -35,11 +35,11 @@ public class agreement { //anlaşma
         this.agreement_id = agreement_id;
     }
 
-    public Date getAgreement_date() {
+    public String getAgreement_date() {
         return agreement_date;
     }
 
-    public void setAgreement_date(Date agreement_date) {
+    public void setAgreement_date(String agreement_date) {
         this.agreement_date = agreement_date;
     }
 

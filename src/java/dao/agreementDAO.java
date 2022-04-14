@@ -21,7 +21,7 @@ public class agreementDAO extends DBConnection {
     
     private usersDAO usersDao;
 
-    public String create(agreement c) {
+    public void create(agreement c) {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
@@ -31,7 +31,7 @@ public class agreementDAO extends DBConnection {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "index";
+       
     }
 
     public void delete(agreement c) {
@@ -50,7 +50,7 @@ public class agreementDAO extends DBConnection {
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "update agreement set name='"+c.getName()+"',agreement_date='" + c.getAgreement_date() + "',"+c.getUsers().getUsers_id()+" where  agreement_id=" + c.getAgreement_id();
+            String query = "update agreement set name='"+c.getName()+"',agreement_date='" + c.getAgreement_date() + "',users_id="+c.getUsers().getUsers_id()+" where  agreement_id=" + c.getAgreement_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class agreementDAO extends DBConnection {
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 users u=this.getUsersDao().findByID(rs.getInt("users_id"));
-                agreementList.add(new agreement(rs.getInt("agreement_id"), rs.getString("name"),rs.getDate("agreement_date"),u));
+                agreementList.add(new agreement(rs.getInt("agreement_id"), rs.getString("name"),rs.getString("agreement_date"),u));
 
             }
 

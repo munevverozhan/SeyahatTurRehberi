@@ -67,4 +67,27 @@ public class users {
         this.last_name = last_name;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + this.users_id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final users other = (users) obj;
+        return this.users_id == other.users_id;
+    }
+    
+
 }
