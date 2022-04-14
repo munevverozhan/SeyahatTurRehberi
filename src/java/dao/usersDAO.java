@@ -51,7 +51,7 @@ public class usersDAO extends DBConnection{
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "delete from users where users_is_id=" + c.getUsers_id();
+            String query = "delete from users where users_id=" + c.getUsers_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class usersDAO extends DBConnection{
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "update users set mail='" + c.getMail() + "',passwords='" + c.getPasswords()+"'firstname='" + c.getLast_name()+ "' where  users_id=" + c.getUsers_id();
+            String query = "update users set mail='" + c.getMail() + "',passwords='" + c.getPasswords()+"',first_name='"+c.getFirst_name()+"',first_name='" + c.getLast_name()+ "' where  users_id=" + c.getUsers_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class usersDAO extends DBConnection{
             String query = "select * from users";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                usersList.add(new users(rs.getInt("users_id"), rs.getString("mail"), rs.getString("passwords"), rs.getString("firstname"), rs.getString("lastname")));
+                usersList.add(new users(rs.getInt("users_id"), rs.getString("mail"), rs.getString("passwords"), rs.getString("first_name"), rs.getString("last_name")));
 
             }
 
