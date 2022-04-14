@@ -21,11 +21,11 @@ public class agreementDAO extends DBConnection {
     
     private usersDAO usersDao;
 
-    public void create(agreement c) {
+    public void create(agreement c) { 
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "insert into agreement(name,agreement_date,users_id) values('"+c.getName()+"'," + c.getAgreement_date() + "',"+c.getUsers().getUsers_id()+")";
+            String query = "insert into agreement(name,agreement_date,users_id) values('"+c.getName()+"','" + c.getAgreement_date() + "',"+c.getUsers().getUsers_id()+")";
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -78,6 +78,9 @@ public class agreementDAO extends DBConnection {
     }
 
     public usersDAO getUsersDao() {
+         if (usersDao == null) {
+            this.usersDao = new usersDAO();
+        }
         return usersDao;
     }
 

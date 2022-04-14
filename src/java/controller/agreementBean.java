@@ -9,7 +9,6 @@ import entity.agreement;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
