@@ -12,17 +12,17 @@ public class users {
 
     private int users_id;
     private String mail;
-    private String password;
+    private String passwords;
     private String first_name;
     private String last_name;
 
     public users() {
     }
 
-    public users(int users_id, String mail, String password, String first_name, String last_name) {
+    public users(int users_id, String mail, String passwords, String first_name, String last_name) {
         this.users_id = users_id;
         this.mail = mail;
-        this.password = password;
+        this.passwords = passwords;
         this.first_name = first_name;
         this.last_name = last_name;
     }
@@ -43,13 +43,15 @@ public class users {
         this.mail = mail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswords() {
+        return passwords;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswords(String passwords) {
+        this.passwords = passwords;
     }
+
+   
 
     public String getFirst_name() {
         return first_name;

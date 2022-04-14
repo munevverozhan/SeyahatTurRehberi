@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+     
+      <h:head>
+        <title>Users</title>
+    </h:head>
+    
+        <body>
+        <h:form>
+            <h:commandButton action="/index" value="Home"/>
+
+        </h:form>
+        <hr/>
+
+
+
+        <h:form>
+            mail:  <h:inputText value="#{usersBean.entity.mail}"/>
+            passwords: <h:inputText value="#{usersBean.entity.passwords}"/>
+            first_name:  <h:inputText value="#{usersBean.entity.first_name}"/>
+           last_name:  <h:inputText value="#{usersBean.entity.last_name}"/>
+            <h:commandButton rendered="#{usersBean.entity.users_id==0}"  action="#{usersBean.createUsers}" value ="create"/>
+            <h:commandButton rendered="#{usersBean.entity.users_id!=0}"  action="#{usersBean.update}" value ="update"/>
+            <h:commandButton rendered="#{usersBean.entity.users_id!=0}" action="#{usersBean.clear}" value="Clear Form"/>
+
+        </h:form>
+        <h:form>
+            <h:dataTable border="1" value="#{usersBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{c.users_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">MAIL</f:facet>
+                        #{c.mail}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">PASSWORD</f:facet>
+                        #{c.passwords}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">NAME</f:facet>
+                        #{c.first_name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">SURNAME</f:facet>
+                        #{c.last_name}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">DELETE</f:facet>
+                    <h:commandButton action="#{usersBean.delete(c)}" value ="sil"/>
+                    <h:commandButton action="#{usersBean.setEntity(c)}" value ="edit"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+    </body>
+            
+
+</html>

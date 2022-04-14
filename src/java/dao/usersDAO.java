@@ -25,7 +25,7 @@ public class usersDAO extends DBConnection{
             Statement st = connect.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                c=(new users(rs.getInt("users_id"), rs.getString("mail"),rs.getString("password"),rs.getString("first_name"),rs.getString("last_name")));
+                c=(new users(rs.getInt("users_id"), rs.getString("mail"),rs.getString("passwords"),rs.getString("first_name"),rs.getString("last_name")));
 
             }
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class usersDAO extends DBConnection{
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "insert into users(mail,passwords,firstname,lastname) values('" + c.getMail() + "', '" + c.getPassword()+ "','" + c.getFirst_name()+ "','" + c.getLast_name()+ "')";
+            String query = "insert into users(mail,passwords,first_name,last_name) values('" + c.getMail() + "', '" + c.getPasswords()+ "','" + c.getFirst_name()+ "','" + c.getLast_name()+ "')";
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class usersDAO extends DBConnection{
         try {
             Connection connect = this.connect();
             Statement st = connect.createStatement();
-            String query = "update users set mail='" + c.getMail() + "',passwords='" + c.getPassword()+"'firstname='" + c.getLast_name()+ "' where  users_id=" + c.getUsers_id();
+            String query = "update users set mail='" + c.getMail() + "',passwords='" + c.getPasswords()+"'firstname='" + c.getLast_name()+ "' where  users_id=" + c.getUsers_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {

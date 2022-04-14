@@ -60,7 +60,7 @@ public class usersBean implements Serializable {
         this.list = list;
     }
 
-    public void create() {
+    public void createUsers() {
 
         this.getDao().createUsers(entity);
         this.entity = new users();
