@@ -59,7 +59,7 @@ public class hotelsBean implements Serializable {
 
     public void create() {
 
-        this.getDao().createHotels(entity);
+        this.getDao().create(entity);
         this.entity = new hotels();
         
     }

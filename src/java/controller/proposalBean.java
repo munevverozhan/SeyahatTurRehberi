@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author aysetunc
+ * @author serpl
  */
 @Named(value = "proposalBean")
 @SessionScoped
@@ -66,7 +66,7 @@ public class proposalBean implements Serializable {
 
     public void create() {
 
-        this.getDao().createProposal(entity);
+        this.getDao().create(entity);
         this.entity = new proposal();
        
     }
