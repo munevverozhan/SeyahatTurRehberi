@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author DELL
+ * @author aysetunc
  */
 @Named(value = "holidaysBean")
 @SessionScoped
@@ -61,7 +61,7 @@ public class holidaysBean implements Serializable {
         this.list = list;
     }
 
-    public void create() {
+    public void createHolidays() {
 
         this.getDao().createHolidays(entity);
         this.entity = new holidays();
@@ -78,3 +78,4 @@ public class holidaysBean implements Serializable {
     }
 
 }
+

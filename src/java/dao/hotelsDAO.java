@@ -18,6 +18,8 @@ import util.DBConnection;
  * @author serpl
  */
 public class hotelsDAO extends DBConnection {
+    
+    private usersDAO usersDAO;
 
     public String createHotels(hotels c) {
         try {

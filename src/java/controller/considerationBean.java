@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author DELL
+ * @author aysetunc
  */
 @Named(value = "considerationBean")
 @SessionScoped
@@ -65,4 +65,17 @@ public class considerationBean implements Serializable {
         this.getDao().delete(c);
     }
 
+    public void create() {
+
+        this.getDao().create(entity);
+        this.entity = new consideration();
+        
+    }
+
+    public void update() {
+        this.getDao().update(this.entity);
+        this.entity = new consideration();
+    }
+
 }
+
