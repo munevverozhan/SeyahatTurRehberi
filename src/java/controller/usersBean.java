@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 /**
  *
- * @author serpl
+ * @author DELL
  */
 @Named(value = "usersBean")
 @SessionScoped
@@ -77,3 +77,4 @@ public class usersBean implements Serializable {
     }
 
 }
+

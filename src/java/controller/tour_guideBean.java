@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
  */
 package controller;
-
-import dao.tours_carDAO;
-import entity.tours_car;
+ 
+import dao.tour_guideDAO;
+import entity.tour_guide;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -13,67 +13,65 @@ import java.util.List;
 
 /**
  *
- * @author DELL
+ * @author munevver
  */
-@Named(value = "tours_carBean")
+@Named(value = "tour_guideBean")
 @SessionScoped
-public class tours_carBean implements Serializable {
+public class tour_guideBean implements Serializable {
 
-    /**
-     * Creates a new instance of tours_carBean
-     */
-    public tours_carBean() {
+    public tour_guideBean() {
     }
-    private tours_car entity;
-    private tours_carDAO dao;
-    private List<tours_car> list;
+    private tour_guide entity;
+    private tour_guideDAO dao;
+    private List<tour_guide> list;
+  
 
-    public tours_car getEntity() {
+    public tour_guide getEntity() {
         if (this.entity == null) {
-            this.entity = new tours_car();
-
+            this.entity = new tour_guide();
         }
         return entity;
     }
 
-    public void setEntity(tours_car entity) {
+    public void setEntity(tour_guide entity) {
         this.entity = entity;
     }
 
-    public tours_carDAO getDao() {
+    public tour_guideDAO getDao() {
         if (this.dao == null) {
-            this.dao = new tours_carDAO();
+            this.dao = new tour_guideDAO();
         }
         return dao;
     }
 
-    public void setDao(tours_carDAO dao) {
+    public void setDao(tour_guideDAO dao) {
         this.dao = dao;
     }
 
-    public List<tours_car> getList() {
-        this.list = this.getDao().getTours_carList();
+    public List<tour_guide> getList() {
+        this.list = this.getDao().getTour_guideList();
         return list;
     }
 
-    public void setList(List<tours_car> list) {
+    public void setList(List<tour_guide> list) {
         this.list = list;
     }
-    
+
     public void create() {
 
         this.getDao().create(entity);
-        this.entity = new tours_car();
-        
+        this.entity = new tour_guide();
+
     }
 
-    public void delete(tours_car c) {
+    public void delete(tour_guide c) {
         this.getDao().delete(c);
     }
 
     public void update() {
         this.getDao().update(this.entity);
-        this.entity = new tours_car();
+        this.entity = new tour_guide();
     }
-
+    
 }
+
