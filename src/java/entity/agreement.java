@@ -8,7 +8,6 @@ package entity;
  *
  * @author munevver
  */
-import java.util.Date;
 
 public class agreement { //anlaşma
 
