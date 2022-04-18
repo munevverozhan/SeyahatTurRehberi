@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>proposal</title>
+    </head>
+   <body>
+        <h:form>
+            <h:commandButton action="/index" value="Home"/>
+
+        </h:form>
+        <hr/>
+
+
+
+        <h:form>
+            name:  <h:inputText value="#{proposalBean.entity.proposal_name}"/>
+            context: <h:inputText value="#{proposalBean.entity.context}"/>
+            <h:commandButton rendered="#{proposalBean.entity.proposal_id==0}"  action="#{proposalBean.create}" value ="create"/>
+            <h:commandButton rendered="#{proposalBean.entity.proposal_id!=0}"  action="#{proposalBean.update}" value ="update"/>
+            <h:commandButton rendered="#{proposalBean.entity.proposal_id!=0}" action="#{proposalBean.clear}" value="Clear Form"/>
+
+        </h:form>
+        <h:form>
+            <h:dataTable border="1" value="#{proposalBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{c.proposal_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">name</f:facet>
+                        #{c.proposal_name}
+                </h:column>
+              
+
+                <h:column>
+                    <f:facet name="header">ADMINISTRATION</f:facet>
+                    <h:commandButton action="#{proposalBean.delete(c)}" value ="sil"/>
+                    <h:commandButton action="#{proposalBean.setEntity(c)}" value ="edit"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+    </body>
+</html>
