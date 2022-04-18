@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.Objects;
+
 /**
  *
  * @author serpl
@@ -72,7 +74,11 @@ public class users {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + this.users_id;
+        hash = 53 * hash + this.users_id;
+        hash = 53 * hash + Objects.hashCode(this.mail);
+        hash = 53 * hash + Objects.hashCode(this.passwords);
+        hash = 53 * hash + Objects.hashCode(this.first_name);
+        hash = 53 * hash + Objects.hashCode(this.last_name);
         return hash;
     }
 
@@ -88,8 +94,22 @@ public class users {
             return false;
         }
         final users other = (users) obj;
-        return this.users_id == other.users_id;
+        if (this.users_id != other.users_id) {
+            return false;
+        }
+        if (!Objects.equals(this.mail, other.mail)) {
+            return false;
+        }
+        if (!Objects.equals(this.passwords, other.passwords)) {
+            return false;
+        }
+        if (!Objects.equals(this.first_name, other.first_name)) {
+            return false;
+        }
+        return Objects.equals(this.last_name, other.last_name);
     }
+
+ 
     
 
 }
