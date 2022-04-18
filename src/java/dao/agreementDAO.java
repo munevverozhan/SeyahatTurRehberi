@@ -18,26 +18,26 @@ import util.DBConnection;
  * @author munevver
  */
 public class agreementDAO extends DBConnection {
-    
+
     private usersDAO usersDao;
 
-    public void create(agreement c) { 
+    public void create(agreement c) {
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
-            String query = "insert into agreement(name,agreement_date,users_id) values('"+c.getName()+"','" + c.getAgreement_date() + "',"+c.getUsers().getUsers_id()+")";
+            Statement st = this.getConnection().createStatement();
+
+            String query = "insert into agreement(name,agreement_date,users_id) values('" + c.getName() + "','" + c.getAgreement_date() + "'," + c.getUsers().getUsers_id() + ")";
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-       
+
     }
 
     public void delete(agreement c) {
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
+            Statement st = this.getConnection().createStatement();
+
             String query = "delete from agreement where agreement_id=" + c.getAgreement_id();
             int r = st.executeUpdate(query);
 
@@ -48,9 +48,9 @@ public class agreementDAO extends DBConnection {
 
     public void update(agreement c) {
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
-            String query = "update agreement set name='"+c.getName()+"',agreement_date='" + c.getAgreement_date() + "',users_id="+c.getUsers().getUsers_id()+" where  agreement_id=" + c.getAgreement_id();
+            Statement st = this.getConnection().createStatement();
+
+            String query = "update agreement set name='" + c.getName() + "',agreement_date='" + c.getAgreement_date() + "',users_id=" + c.getUsers().getUsers_id() + " where  agreement_id=" + c.getAgreement_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -61,13 +61,14 @@ public class agreementDAO extends DBConnection {
     public List<agreement> getAgreementList() {
         List<agreement> agreementList = new ArrayList<>();
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
-            String query = "select * from agreement";
+
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select * from agreement order by agreement_id asc";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                users u=this.getUsersDao().findByID(rs.getInt("users_id"));
-                agreementList.add(new agreement(rs.getInt("agreement_id"), rs.getString("name"),rs.getString("agreement_date"),u));
+                users u = this.getUsersDao().findByID(rs.getInt("users_id"));
+                agreementList.add(new agreement(rs.getInt("agreement_id"), rs.getString("name"), rs.getString("agreement_date"), u));
 
             }
 
@@ -78,7 +79,7 @@ public class agreementDAO extends DBConnection {
     }
 
     public usersDAO getUsersDao() {
-         if (usersDao == null) {
+        if (usersDao == null) {
             this.usersDao = new usersDAO();
         }
         return usersDao;
@@ -87,5 +88,5 @@ public class agreementDAO extends DBConnection {
     public void setUsersDao(usersDAO usersDao) {
         this.usersDao = usersDao;
     }
-    
+
 }

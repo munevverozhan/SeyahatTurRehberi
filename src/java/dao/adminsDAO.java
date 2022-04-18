@@ -5,7 +5,6 @@
 package dao;
 
 import entity.admins;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ public class adminsDAO extends DBConnection {
 
     public String createAdmins(admins c) {
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
+            Statement st = this.getConnection().createStatement();
+
             String query = "insert into admins(mail,passwords) values('" + c.getMail() + "', '" + c.getPasswords() + "')";
             int r = st.executeUpdate(query);
 
@@ -33,8 +32,8 @@ public class adminsDAO extends DBConnection {
 
     public void delete(admins c) {
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
+            Statement st = this.getConnection().createStatement();
+
             String query = "delete from admins where admins_id=" + c.getAdmins_id();
             int r = st.executeUpdate(query);
 
@@ -45,8 +44,8 @@ public class adminsDAO extends DBConnection {
 
     public void update(admins c) {
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
+            Statement st = this.getConnection().createStatement();
+
             String query = "update admins set mail='" + c.getMail() + "',passwords='" + c.getPasswords() + "' where  admins_id=" + c.getAdmins_id();
             int r = st.executeUpdate(query);
 
@@ -58,8 +57,8 @@ public class adminsDAO extends DBConnection {
     public List<admins> getAdminsList() {
         List<admins> adminsList = new ArrayList<>();
         try {
-            Connection connect = this.connect();
-            Statement st = connect.createStatement();
+            Statement st = this.getConnection().createStatement();
+
             String query = "select * from admins";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
