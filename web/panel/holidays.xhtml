@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <head>
+        <title>holidays</title>
+    </head>
+     <h:body>
+        <h:form>
+            <h:commandButton action="/index" value="Home"/>
+
+        </h:form>
+        <hr/>
+
+        <h:form>
+            users:
+            <h:selectManyMenu
+                value="#{holidaysBean.entity.useries}" converter="usersConverter">
+                <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
+                
+            </h:selectManyMenu>
+            <br/>
+                
+            name: <h:inputText value="#{holidaysBean.entity.holiday_name}" /><br/>
+
+            date: <h:inputTextarea  value="#{holidaysBean.entity.holiday_date}" /><br/>
+
+            <h:commandButton rendered="#{holidaysBean.entity.holidays_id==0}" action="#{holidaysBean.createHolidays}" value="create"/>
+            <h:commandButton rendered="#{holidaysBean.entity.holidays_id!=0}" action="#{holidaysBean.update}" value="update"/>
+
+        </h:form>
+        <hr/>
+        <h:form>
+            <h:dataTable border="1"  value="#{holidaysBean.list}" var="entity">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{entity.holidays_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">name</f:facet>
+                        #{entity.holiday_name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">DATE</f:facet>
+                        #{entity.holiday_date}
+                </h:column>
+                 <h:column>
+                    <f:facet name="header">users</f:facet>
+                           <ul>
+                        <ui:repeat value="#{entity.useries}" var="k">
+                            <li>#{k.first_name}</li>
+                        </ui:repeat>
+                    </ul>
+
+                </h:column>
+                <h:column>
+                    <f:facet name="header">ADMINISTRATION</f:facet>
+                    <h:commandButton action="#{holidaysBean.delete(entity)}" value ="sil"/>
+                    <h:commandButton action="#{holidaysBean.setEntity(entity)}" value ="edit"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+
+    </h:body>
+</html>
