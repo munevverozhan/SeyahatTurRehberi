@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>tours car</title>
+    </head>
+    <body>
+        <h:form>
+            <h:commandButton action="/index" value="Home"/>
+
+        </h:form>
+        <hr/>
+
+        <h:form>
+            hotels: <h:selectOneMenu value="#{tours_carBean.entity.hotel}" converter="hotelsConverter">
+                <f:selectItems value="#{hotelsBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.hotel_area}">
+                </f:selectItems>
+            </h:selectOneMenu>
+
+            car_type: <h:inputText value="#{tours_carBean.entity.car_type}"/>
+            driver_name: <h:inputText value="#{tours_carBean.entity.driver_name}"/>
+
+            <h:commandButton rendered="#{tours_carBean.entity.tours_car_id==0}"  action="#{tours_carBean.create}" value ="create"/>
+            <h:commandButton rendered="#{tours_carBean.entity.tours_car_id!=0}"  action="#{tours_carBean.update}" value ="update"/>
+
+        </h:form>
+        <hr/>
+
+
+        <h:form>
+            <h:dataTable border="1" value="#{tours_carBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{c.tours_car_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">car type</f:facet>
+                        #{c.car_type}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">driver name</f:facet>
+                        #{c.driver_name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">hotels NAME</f:facet>
+                        #{c.hotel.hotel_area}
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">ADMINISTRATION</f:facet>
+                    <h:commandButton action="#{tours_carBean.delete(c)}" value ="sil"/>
+                    <h:commandButton action="#{tours_carBean.setEntity(c)}" value ="edit"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+    </body>
+</html>
+
