@@ -3,49 +3,52 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>
+    <h:head>
         <title>admins</title>
-    </head>
-    <body>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
+    </h:head>
+    <h:body>
         <h:form>
-            <h:commandButton action="/index" value="Home"/>
+            <h:commandButton styleClass="btn btn-secondary"  action="/index" value="&larr; Home"/>
 
         </h:form>
         <hr/>
 
 
+        <div class="container mt-3">
+            <label class="form-label">Title</label>
+            <h:form>
+                mail:  <h:inputText value="#{adminsBean.entity.mail}"/>
+                sifre: <h:inputText value="#{adminsBean.entity.passwords}"/>
+                <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{adminsBean.entity.admins_id==0}"  action="#{adminsBean.create}" value ="create"/>
+                <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{adminsBean.entity.admins_id!=0}"  action="#{adminsBean.update}" value ="update"/>
+                <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{adminsBean.entity.admins_id!=0}" action="#{adminsBean.clear}" value="Clear Form"/>
 
-        <h:form>
-            mail:  <h:inputText value="#{adminsBean.entity.mail}"/>
-            sifre: <h:inputText value="#{adminsBean.entity.passwords}"/>
-            <h:commandButton rendered="#{adminsBean.entity.admins_id==0}"  action="#{adminsBean.create}" value ="create"/>
-            <h:commandButton rendered="#{adminsBean.entity.admins_id!=0}"  action="#{adminsBean.update}" value ="update"/>
-            <h:commandButton rendered="#{adminsBean.entity.admins_id!=0}" action="#{adminsBean.clear}" value="Clear Form"/>
+            </h:form>
+            <h:form>
+                <h:dataTable styleClass="table table-striped" border="1" value="#{adminsBean.list}" var="c">
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                            #{c.admins_id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">MAIL</f:facet>
+                            #{c.mail}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">PASSWORD</f:facet>
+                            #{c.passwords}
+                    </h:column>
 
-        </h:form>
-        <h:form>
-            <h:dataTable border="1" value="#{adminsBean.list}" var="c">
-                <h:column>
-                    <f:facet name="header">ID</f:facet>
-                        #{c.admins_id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">MAIL</f:facet>
-                        #{c.mail}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">PASSWORD</f:facet>
-                        #{c.passwords}
-                </h:column>
+                    <h:column>
+                        <f:facet name="header">ADMINISTRATION</f:facet>
+                        <h:commandButton styleClass="btn btn-danger btn-sm" action="#{adminsBean.delete(c)}" value ="sil"/>
+                        <h:commandButton styleClass="btn btn-primary btn-sm" action="#{adminsBean.setEntity(c)}" value ="edit"/>
+                    </h:column>
 
-                <h:column>
-                    <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton action="#{adminsBean.delete(c)}" value ="sil"/>
-                    <h:commandButton action="#{adminsBean.setEntity(c)}" value ="edit"/>
-                </h:column>
-
-            </h:dataTable>
-        </h:form>
-    </body>
+                </h:dataTable>
+            </h:form>
+        </div>
+    </h:body>
 </html>
-
