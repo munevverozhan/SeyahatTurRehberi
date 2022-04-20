@@ -4,73 +4,76 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <head>
+    <h:head>
         <title>hotels</title>
-    </head>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    </h:head>
     <h:body>
         <h:form>
-            <h:commandButton action="/index" value="Home"/>
+            <h:commandButton styleClass="btn btn-secondary" action="/index" value="&larr; Home"/>
 
         </h:form>
         <hr/>
-
-        <h:form>
-            consideration:
-            <h:selectManyMenu
-                value="#{hotelsBean.entity.cons}" converter="considerationConverter">
-                <f:selectItems value="#{considerationBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.context}"/>
-
-            </h:selectManyMenu>
-             users: <h:selectOneMenu value="#{hotelsBean.entity.users}" converter="usersConverter">
-                <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
+        <div class="container mt-5">
+            <h:form>
                 
-            </h:selectOneMenu>
-            <br/>
-            date: <h:inputTextarea  value="#{hotelsBean.entity.hotel_date}" /><br/>
+                
+                <h:selectManyMenu
+                    value="#{hotelsBean.entity.cons}" converter="considerationConverter">
+                    <f:selectItems value="#{considerationBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.context}"/>
 
-            area: <h:inputText value="#{hotelsBean.entity.hotel_area}" /><br/>
+                </h:selectManyMenu>
+                users: <h:selectOneMenu value="#{hotelsBean.entity.users}" converter="usersConverter">
+                    <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
+
+                </h:selectOneMenu>
+                <br/>
+                date: <h:inputTextarea  value="#{hotelsBean.entity.hotel_date}" /><br/>
+
+                area: <h:inputText value="#{hotelsBean.entity.hotel_area}" /><br/>
 
 
-            <h:commandButton rendered="#{hotelsBean.entity.hotels_id==0}" action="#{hotelsBean.create}" value="create"/>
-            <h:commandButton rendered="#{hotelsBean.entity.hotels_id!=0}" action="#{hotelsBean.update}" value="update"/>
+                <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{hotelsBean.entity.hotels_id==0}" action="#{hotelsBean.create}" value="create"/>
+                <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{hotelsBean.entity.hotels_id!=0}" action="#{hotelsBean.update}" value="update"/>
 
-        </h:form>
-        <hr/>
-        <h:form>
-            <h:dataTable border="1"  value="#{hotelsBean.list}" var="entity">
-                <h:column>
-                    <f:facet name="header">ID</f:facet>
-                        #{entity.hotels_id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">date</f:facet>
-                        #{entity.hotel_date}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">area</f:facet>
-                        #{entity.hotel_area}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">users</f:facet>
-                        #{entity.users.first_name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">considerations</f:facet>
-                    <ul>
-                        <ui:repeat value="#{entity.cons}" var="k">
-                            <li>#{k.context}</li>
-                        </ui:repeat>
-                    </ul>
+            </h:form>
+            <hr/>
 
-                </h:column>
-                <h:column>
-                    <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton action="#{hotelsBean.delete(entity)}" value ="sil"/>
-                    <h:commandButton action="#{hotelsBean.setEntity(entity)}" value ="edit"/>
-                </h:column>
+            <h:form>
+                <h:dataTable styleClass="table table-striped" border="1"  value="#{hotelsBean.list}" var="entity">
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                            #{entity.hotels_id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">date</f:facet>
+                            #{entity.hotel_date}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">area</f:facet>
+                            #{entity.hotel_area}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">users</f:facet>
+                            #{entity.users.first_name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">considerations</f:facet>
+                        <ul>
+                            <ui:repeat value="#{entity.cons}" var="k">
+                                <li>#{k.context}</li>
+                            </ui:repeat>
+                        </ul>
 
-            </h:dataTable>
-        </h:form>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">ADMINISTRATION</f:facet>
+                        <h:commandButton styleClass="btn btn-danger btn-sm" action="#{hotelsBean.delete(entity)}" value ="sil"/>
+                        <h:commandButton styleClass="btn btn-primary btn-sm" action="#{hotelsBean.setEntity(entity)}" value ="edit"/>
+                    </h:column>
 
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>

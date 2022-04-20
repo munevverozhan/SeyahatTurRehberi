@@ -3,15 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>
+    <h:head>
         <title> Agreement</title>
-    </head>
-    <body>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    </h:head>
+    <h:body>
+        <div class="container mt-3">
         <h:form>
-            <h:commandButton action="/index" value="Home"/>
+            <h:commandButton styleClass="btn btn-secondary"  action="/index" value="&larr; Home"/>
 
         </h:form>
         <hr/>
+         <div class="container mt-3">
 
 
 
@@ -24,15 +27,15 @@
             date: <h:inputText value="#{agreementBean.entity.agreement_date}"/>
             name: <h:inputText value="#{agreementBean.entity.name}"/>
 
-            <h:commandButton rendered="#{agreementBean.entity.agreement_id==0}"  action="#{agreementBean.create}" value ="create"/>
-            <h:commandButton rendered="#{agreementBean.entity.agreement_id!=0}"  action="#{agreementBean.update}" value ="update"/>
+            <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{agreementBean.entity.agreement_id==0}"  action="#{agreementBean.create}" value ="create"/>
+            <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{agreementBean.entity.agreement_id!=0}"  action="#{agreementBean.update}" value ="update"/>
 
         </h:form>
         <hr/>
 
 
         <h:form>
-            <h:dataTable border="1" value="#{agreementBean.list}" var="c">
+            <h:dataTable styleClass="table table-striped" border="1" value="#{agreementBean.list}" var="c">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
                         #{c.agreement_id}
@@ -47,17 +50,22 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">FIRST NAME</f:facet>
+                    <ul class="list-group">
+                        
                         #{c.users.first_name}
+                    </ul>    
                 </h:column>
 
 
                 <h:column>
                     <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton action="#{agreementBean.delete(c)}" value ="sil"/>
-                    <h:commandButton action="#{agreementBean.setEntity(c)}" value ="edit"/>
+                    <h:commandButton styleClass="btn btn-danger btn-sm" action="#{agreementBean.delete(c)}" value ="sil"/>
+                    <h:commandButton styleClass="btn btn-primary btn-sm" action="#{agreementBean.setEntity(c)}" value ="edit"/>
                 </h:column>
 
             </h:dataTable>
         </h:form>
-    </body>
+        </div>
+        </div>
+    </h:body>
 </html>
