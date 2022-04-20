@@ -8,8 +8,14 @@
     </h:head>
     <h:body>
         <div class="container mt-2 ">
+            
+            
 
             <h:form>
+                <h:commandButton action="/panel/login?faces-redirect=true" value="Login"/>            
+                <h:commandButton action="/panel/logout?faces-redirect=true" value="Logout"/>
+                <h:commandButton action="/panel/register?faces-redirect=true" value="Register"/>
+                <br/>
 
 
                 <h:commandButton styleClass="btn btn-info" action="/panel/admins" value="admins"/><br/>
@@ -25,6 +31,9 @@
 
 
             </h:form>
+            
+            
+            
         </div>
     </h:body>
 </html>
