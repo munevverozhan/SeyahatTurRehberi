@@ -6,14 +6,16 @@
      
       <h:head>
         <title>Users</title>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
     </h:head>
     
-        <body>
+        <h:body>
         <h:form>
-            <h:commandButton action="/index" value="Home"/>
+            <h:commandButton styleClass="btn btn-secondary" action="/index" value="&larr; Home"/>
 
         </h:form>
         <hr/>
+         <div class="container mt-5">
 
 
 
@@ -22,13 +24,13 @@
             passwords: <h:inputText value="#{usersBean.entity.passwords}"/>
             first_name:  <h:inputText value="#{usersBean.entity.first_name}"/>
            last_name:  <h:inputText value="#{usersBean.entity.last_name}"/>
-            <h:commandButton rendered="#{usersBean.entity.users_id==0}"  action="#{usersBean.createUsers}" value ="create"/>
-            <h:commandButton rendered="#{usersBean.entity.users_id!=0}"  action="#{usersBean.update}" value ="update"/>
-            <h:commandButton rendered="#{usersBean.entity.users_id!=0}" action="#{usersBean.clear}" value="Clear Form"/>
+            <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{usersBean.entity.users_id==0}"  action="#{usersBean.createUsers}" value ="create"/>
+            <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{usersBean.entity.users_id!=0}"  action="#{usersBean.update}" value ="update"/>
+            <h:commandButton styleClass="btn btn-info btn-sm"  rendered="#{usersBean.entity.users_id!=0}" action="#{usersBean.clear}" value="Clear Form"/>
 
         </h:form>
         <h:form>
-            <h:dataTable border="1" value="#{usersBean.list}" var="c">
+            <h:dataTable styleClass="table table-striped table-hover" value="#{usersBean.list}" var="c">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
                         #{c.users_id}
@@ -52,13 +54,14 @@
 
                 <h:column>
                     <f:facet name="header">DELETE</f:facet>
-                    <h:commandButton action="#{usersBean.delete(c)}" value ="sil"/>
-                    <h:commandButton action="#{usersBean.setEntity(c)}" value ="edit"/>
+                    <h:commandButton styleClass="btn btn-danger btn-sm" action="#{usersBean.delete(c)}" value ="sil"/>
+                    <h:commandButton styleClass="btn btn-primary btn-sm" action="#{usersBean.setEntity(c)}" value ="edit"/>
                 </h:column>
 
             </h:dataTable>
         </h:form>
-    </body>
+             </div>
+    </h:body>
             
 
 </html>
