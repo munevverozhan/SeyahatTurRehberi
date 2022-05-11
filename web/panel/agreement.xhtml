@@ -24,8 +24,10 @@
                 </f:selectItems>
             </h:selectOneMenu>
 
-            date: <h:inputText value="#{agreementBean.entity.agreement_date}"/>
-            name: <h:inputText value="#{agreementBean.entity.name}"/>
+            date: <h:inputText id="date_id" value="#{agreementBean.entity.agreement_date}" required="true" requiredMessage="Lütfen bir sözleşme tarihi giriniz."/>
+            <h:message for="date_id" style="color: red" /> <br/>
+            name: <h:inputText id="name_id" value="#{agreementBean.entity.name}" required="true" requiredMessage=" Lütfen bir sözleşme ismi giriniz."/>
+            <h:message for="name_id" style="color: red" /> <br/>
 
             <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{agreementBean.entity.agreement_id==0}"  action="#{agreementBean.create}" value ="create"/>
             <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{agreementBean.entity.agreement_id!=0}"  action="#{agreementBean.update}" value ="update"/>
