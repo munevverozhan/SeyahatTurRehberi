@@ -30,9 +30,11 @@
             </h:selectManyMenu>
             <br/>
                 
-            name: <h:inputText value="#{holidaysBean.entity.holiday_name}" /><br/>
+            name: <h:inputText  id="name_id" value="#{holidaysBean.entity.holiday_name}" required="true" requiredMessage="Lütfen tatil ismi giriniz." />
+            <h:message for="name_id" style="color: mediumvioletred" /> <br/>
 
-            date: <h:inputTextarea  value="#{holidaysBean.entity.holiday_date}" /><br/>
+            date: <h:inputTextarea id="date_id" value="#{holidaysBean.entity.holiday_date}" required="true" requiredMessage="Lütfen randevu tarihi giriniz." />
+            <h:message for="date_id" style="color: #dc3545" /><br/>
 
             <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{holidaysBean.entity.holidays_id==0}" action="#{holidaysBean.createHolidays}" value="create"/>
             <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{holidaysBean.entity.holidays_id!=0}" action="#{holidaysBean.update}" value="update"/>
