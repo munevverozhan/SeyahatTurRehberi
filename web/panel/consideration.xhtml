@@ -27,7 +27,8 @@
             </div>    
              <div class="mb-3">
                 
-           <h:inputTextarea  value="#{considerationBean.entity.context}" /><br/>
+           yorum: <h:inputTextarea id="yorum_id" value="#{considerationBean.entity.context}" required="true" requiredMessage="Lütfen yorum giriniz." />
+            <h:message for="yorum_id" style="color: crimson" /> <br/>
              </div>
             <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{considerationBean.entity.consideration_id==0}" action="#{considerationBean.create}" value="create"/>
             <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{considerationBean.entity.consideration_id!=0}" action="#{considerationBean.update}" value="update"/>
