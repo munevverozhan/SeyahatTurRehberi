@@ -16,8 +16,8 @@
         <hr/>
         <div class="container mt-5">
             <h:form>
-                
-                
+
+
                 <h:selectManyMenu
                     value="#{hotelsBean.entity.cons}" converter="considerationConverter">
                     <f:selectItems value="#{considerationBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.context}"/>
@@ -28,9 +28,12 @@
 
                 </h:selectOneMenu>
                 <br/>
-                date: <h:inputTextarea  value="#{hotelsBean.entity.hotel_date}" /><br/>
+                date: <h:inputTextarea id="date_id" value="#{hotelsBean.entity.hotel_date}" required="true" requiredMessage="Lütfen bir tarih giriniz." />
+                <h:message for="date_id" style="color: red"/> <br/>
 
-                area: <h:inputText value="#{hotelsBean.entity.hotel_area}" /><br/>
+
+                area: <h:inputText  id="area_id" value="#{hotelsBean.entity.hotel_area}" required="true" requiredMessage="Lütfen bir otel ismi giriniz."/>
+                <h:message for="area_id" style="color: red"/> <br/>
 
 
                 <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{hotelsBean.entity.hotels_id==0}" action="#{hotelsBean.create}" value="create"/>
