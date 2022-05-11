@@ -8,6 +8,10 @@ import dao.adminsDAO;
 import entity.admins;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.validator.ValidatorException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,6 +27,17 @@ public class adminsBean implements Serializable {
      * Creates a new instance of adminsBean
      */
     public adminsBean() {
+    }
+    public boolean validatePassword(FacesContext context, UIComponent cmp, Object value) throws ValidatorException {
+
+        String v = (String) value;
+        if (v.isEmpty()) {
+            throw new ValidatorException(new FacesMessage("Şifre alanı boş olamaz."));
+        } else if (v.length() < 7) {
+            throw new ValidatorException(new FacesMessage("Şifre alanı 8 karakterden kısa olamaz."));
+
+        }
+        return true;
     }
     private admins entity;
     private adminsDAO dao;

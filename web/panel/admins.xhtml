@@ -19,8 +19,11 @@
         <div class="container mt-3">
             <label class="form-label">Title</label>
             <h:form>
-                mail:  <h:inputText value="#{adminsBean.entity.mail}"/>
-                sifre: <h:inputText value="#{adminsBean.entity.passwords}"/>
+                mail:  <h:inputText id="mail_id" value="#{adminsBean.entity.mail}" required="true" requiredMessage="Lütfen bir mail adresi giriniz."/>
+                <h:message for="mail_id" style="color:red"/><br/>
+
+                sifre: <h:inputSecret id="password_id" validator="#{adminsBean.validatePassword}" value="#{adminsBean.entity.passwords}"/>
+                <h:message for="password_id" style="color:red"/><br/>
                 <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{adminsBean.entity.admins_id==0}"  action="#{adminsBean.create}" value ="create"/>
                 <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{adminsBean.entity.admins_id!=0}"  action="#{adminsBean.update}" value ="update"/>
                 <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{adminsBean.entity.admins_id!=0}" action="#{adminsBean.clear}" value="Clear Form"/>
