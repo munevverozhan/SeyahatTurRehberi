@@ -18,8 +18,10 @@
 
 
         <h:form>
-            name:  <h:inputText value="#{proposalBean.entity.proposal_name}"/>
-            context: <h:inputText value="#{proposalBean.entity.context}"/>
+             name:  <h:inputText id="name_id" value="#{proposalBean.entity.proposal_name}" required="true" requiredMessage="Lütfen öneri ismi giriniz."/>
+            <h:message for="name_id" style="color: red"/> <br/>
+            context: <h:inputText id="context_id" value="#{proposalBean.entity.context}" required="true" requiredMessage="Lütfen açıklama giriniz."/>
+            <h:message for="context_id" style="color: red"/> <br/>
             <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{proposalBean.entity.proposal_id==0}"  action="#{proposalBean.create}" value ="create"/>
             <h:commandButton styleClass="btn btn-info btn-sm"  rendered="#{proposalBean.entity.proposal_id!=0}"  action="#{proposalBean.update}" value ="update"/>
             <h:commandButton styleClass="btn btn-info btn-sm"  rendered="#{proposalBean.entity.proposal_id!=0}" action="#{proposalBean.clear}" value="Clear Form"/>
