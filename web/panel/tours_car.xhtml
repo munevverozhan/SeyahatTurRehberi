@@ -18,9 +18,12 @@
                 <f:selectItems value="#{hotelsBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.hotel_area}">
                 </f:selectItems>
             </h:selectOneMenu>
+            car_type: <h:inputText id="carType_id" value="#{tours_carBean.entity.car_type}" required="true" requiredMessage="Bu alan boş bırakılamaz." />
+            <h:message for="carType_id" style="color: red"/> <br/> 
 
-            car_type: <h:inputText value="#{tours_carBean.entity.car_type}"/>
-            driver_name: <h:inputText value="#{tours_carBean.entity.driver_name}"/>
+            driver_name: <h:inputText id="driverName_id" value="#{tours_carBean.entity.driver_name}" required="true" requiredMessage="Bu alan boş bırakılamaz." />
+            <h:message for="driverName_id" style="color: red"/> <br/> 
+
 
             <h:commandButton rendered="#{tours_carBean.entity.tours_car_id==0}"  action="#{tours_carBean.create}" value ="create"/>
             <h:commandButton rendered="#{tours_carBean.entity.tours_car_id!=0}"  action="#{tours_carBean.update}" value ="update"/>
