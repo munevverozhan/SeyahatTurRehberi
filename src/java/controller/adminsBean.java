@@ -28,6 +28,7 @@ public class adminsBean implements Serializable {
      */
     public adminsBean() {
     }
+
     public boolean validatePassword(FacesContext context, UIComponent cmp, Object value) throws ValidatorException {
 
         String v = (String) value;

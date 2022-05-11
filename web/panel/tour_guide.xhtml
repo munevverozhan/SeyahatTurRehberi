@@ -14,70 +14,70 @@
 
         </h:form>
         <hr/>
+        <div class="container mt-5">
 
-       
-        <h:form>
-            proposals:
-            <h:selectManyMenu
-                value="#{tour_guideBean.entity.prop}" converter="proposalConverter">
-                <f:selectItems value="#{proposalBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.proposal_name}"/>
+            <h:form>
+                proposals:
+                <h:selectManyMenu
+                    value="#{tour_guideBean.entity.prop}" converter="proposalConverter">
+                    <f:selectItems value="#{proposalBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.proposal_name}"/>
 
-            </h:selectManyMenu>
-            <br/>
-            holidays: <h:selectOneMenu value="#{tour_guideBean.entity.holidays}" converter="holidaysConverter">
-                <f:selectItems value="#{holidaysBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.holiday_name}"/>
+                </h:selectManyMenu>
+                <br/>
+                holidays: <h:selectOneMenu value="#{tour_guideBean.entity.holidays}" converter="holidaysConverter">
+                    <f:selectItems value="#{holidaysBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.holiday_name}"/>
 
-            </h:selectOneMenu> <br/>
+                </h:selectOneMenu> <br/>
 
-            guide name: <h:inputText  id="guideName_id" value="#{tour_guideBean.entity.guide_name}" required="true" requiredMessage="Lütfen bir isim giriniz." />
-            <h:message for="guideName_id" style="color: red"/><br/> 
-
-
-            guide language <h:inputTextarea id="guideLanguage_id"  value="#{tour_guideBean.entity.guide_language}" required="true" requiredMessage="Lütfen en az bir dil giriniz" />
-            <h:message for="guideLanguage_id" style="color: red"/><br/> 
-
-            <h:commandButton rendered="#{tour_guideBean.entity.tour_guide_id==0}" action="#{tour_guideBean.create}" value="create"/>
-            <h:commandButton rendered="#{tour_guideBean.entity.tour_guide_id!=0}" action="#{tour_guideBean.update}" value="update"/>
-
-        </h:form>
-        <hr/>
-        <h:form>
-            <h:dataTable styleClass="table table-bordered" value="#{tour_guideBean.list}" var="entity"  >
-                <h:column>
-                    <f:facet name="header">ID</f:facet>
-                        #{entity.tour_guide_id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">name</f:facet>
-                        #{entity.guide_name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">language</f:facet>
-                        #{entity.guide_language}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">holiday NAME</f:facet>
-                        #{entity.holidays.holiday_name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">proposals</f:facet>
-                    <ul>
-                        <ui:repeat value="#{entity.prop}" var="k">
-                            <li>#{k.proposal_name}</li>
-                        </ui:repeat>
-                    </ul>
-
-                </h:column>
+                guide name: <h:inputText  id="guideName_id" value="#{tour_guideBean.entity.guide_name}" required="true" requiredMessage="Lütfen bir isim giriniz." />
+                <h:message for="guideName_id" style="color: red"/><br/> 
 
 
-                <h:column>
-                    <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton  styleClass="btn btn-danger" action="#{tour_guideBean.delete(entity)}" value ="sil"/>
-                    <h:commandButton action="#{tour_guideBean.setEntity(entity)}" value ="edit"/>
-                </h:column>
+                guide language <h:inputTextarea id="guideLanguage_id"  value="#{tour_guideBean.entity.guide_language}" required="true" requiredMessage="Lütfen en az bir dil giriniz" />
+                <h:message for="guideLanguage_id" style="color: red"/><br/> 
 
-            </h:dataTable>
-        </h:form>
-           
+                <h:commandButton rendered="#{tour_guideBean.entity.tour_guide_id==0}" action="#{tour_guideBean.create}" value="create"/>
+                <h:commandButton rendered="#{tour_guideBean.entity.tour_guide_id!=0}" action="#{tour_guideBean.update}" value="update"/>
+
+            </h:form>
+            <hr/>
+            <h:form>
+                <h:dataTable styleClass="table table-bordered" value="#{tour_guideBean.list}" var="entity"  >
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                            #{entity.tour_guide_id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">name</f:facet>
+                            #{entity.guide_name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">language</f:facet>
+                            #{entity.guide_language}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">holiday NAME</f:facet>
+                            #{entity.holidays.holiday_name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">proposals</f:facet>
+                        <ul>
+                            <ui:repeat value="#{entity.prop}" var="k">
+                                <li>#{k.proposal_name}</li>
+                            </ui:repeat>
+                        </ul>
+
+                    </h:column>
+
+
+                    <h:column>
+                        <f:facet name="header">ADMINISTRATION</f:facet>
+                        <h:commandButton  styleClass="btn btn-danger" action="#{tour_guideBean.delete(entity)}" value ="sil"/>
+                        <h:commandButton action="#{tour_guideBean.setEntity(entity)}" value ="edit"/>
+                    </h:column>
+
+                </h:dataTable>
+            </h:form>
+        </div>  
     </h:body>
 </html>

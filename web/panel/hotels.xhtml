@@ -18,19 +18,18 @@
             <h:form>
 
 
-                <h:selectManyMenu
+
+                consideration: <h:selectManyMenu
                     value="#{hotelsBean.entity.cons}" converter="considerationConverter">
                     <f:selectItems value="#{considerationBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.context}"/>
+                </h:selectManyMenu> <br/>
 
-                </h:selectManyMenu>
                 users: <h:selectOneMenu value="#{hotelsBean.entity.users}" converter="usersConverter">
                     <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
+                </h:selectOneMenu> <br/>
 
-                </h:selectOneMenu>
-                <br/>
                 date: <h:inputTextarea id="date_id" value="#{hotelsBean.entity.hotel_date}" required="true" requiredMessage="Lütfen bir tarih giriniz." />
                 <h:message for="date_id" style="color: red"/> <br/>
-
 
                 area: <h:inputText  id="area_id" value="#{hotelsBean.entity.hotel_area}" required="true" requiredMessage="Lütfen bir otel ismi giriniz."/>
                 <h:message for="area_id" style="color: red"/> <br/>
