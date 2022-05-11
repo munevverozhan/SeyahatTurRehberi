@@ -20,10 +20,19 @@
 
 
         <h:form>
-            mail:  <h:inputText value="#{usersBean.entity.mail}"/>
-            passwords: <h:inputText value="#{usersBean.entity.passwords}"/>
-            first_name:  <h:inputText value="#{usersBean.entity.first_name}"/>
-           last_name:  <h:inputText value="#{usersBean.entity.last_name}"/>
+            mail:  <h:inputText id="mail-id" value="#{usersBean.entity.mail}" required="true" requiredMessage="bir mail adresi giriniz." ></h:inputText>
+            <h:message for="mail-id" style="color: red"/> <br/> 
+
+            passwords: <h:inputSecret id="password-id" validator="#{usersBean.validatePassword}" value="#{usersBean.entity.passwords}"/>
+            <h:message for="password-id" style="color: red"/> <br/> 
+
+
+            first_name:  <h:inputText id="first_name-id" value="#{usersBean.entity.first_name}" required="true" requiredMessage="Bu alan boş bırakılamaz."/>
+            <h:message for="first_name-id" style="color: red"/><br/> 
+      
+            last_name:  <h:inputText id="last_name-id" value="#{usersBean.entity.last_name}" required="true" requiredMessage="Bu alan boş bırakılamaz."/>
+            <h:message for="last_name-id" style="color: red"/> <br/> 
+
             <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{usersBean.entity.users_id==0}"  action="#{usersBean.createUsers}" value ="create"/>
             <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{usersBean.entity.users_id!=0}"  action="#{usersBean.update}" value ="update"/>
             <h:commandButton styleClass="btn btn-info btn-sm"  rendered="#{usersBean.entity.users_id!=0}" action="#{usersBean.clear}" value="Clear Form"/>
