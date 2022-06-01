@@ -8,61 +8,85 @@
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 
     </h:head>
-    <h:body>
+    <body>
         <h:form>
-            <h:commandButton styleClass="btn btn-secondary" action="/index" value="&larr; Home"/>
+            <h:commandButton action="/index" value="Home"/>
 
         </h:form>
         <hr/>
-        <div class="container mt-5">
-            <h:form>
-                hotels: <h:selectOneMenu value="#{tours_carBean.entity.hotel}" converter="hotelsConverter">
-                    <f:selectItems value="#{hotelsBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.hotel_area}">
-                    </f:selectItems>
-                </h:selectOneMenu> <br/>
-                car_type: <h:inputText id="carType_id" value="#{tours_carBean.entity.car_type}" required="true" requiredMessage="Bu alan boş bırakılamaz." />
-                <h:message for="carType_id" style="color: red"/> <br/> 
 
-                driver_name: <h:inputText id="driverName_id" value="#{tours_carBean.entity.driver_name}" required="true" requiredMessage="Bu alan boş bırakılamaz." />
-                <h:message for="driverName_id" style="color: red"/> <br/> 
+        <h:form id="tours_car_form">
+            Oteller:
+            <h:selectOneMenu value="#{tours_carBean.entity.hotel}" converter="hotelsConverter">
+                <f:selectItems value="#{hotelsBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.hotel_area}">
+                </f:selectItems>
+            </h:selectOneMenu> <br/>
 
+            Araba modeli:
+            <h:inputText id="carType_id" value="#{tours_carBean.entity.car_type}" required="true" requiredMessage="Bu alan boş bırakılamaz." />
+            <h:message for="carType_id" style="color: red"/> <br/> 
 
-                <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{tours_carBean.entity.tours_car_id==0}"  action="#{tours_carBean.create}" value ="create"/>
-                <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{tours_carBean.entity.tours_car_id!=0}"  action="#{tours_carBean.update}" value ="update"/>
-
-            </h:form>
-            <hr/>
+            Sürücü ismi:
+            <h:inputText id="driverName_id" value="#{tours_carBean.entity.driver_name}" required="true" requiredMessage="Bu alan boş bırakılamaz." />
+            <h:message for="driverName_id" style="color: red"/> <br/> 
 
 
-            <h:form>
-                <h:dataTable styleClass="table table-striped" border="1" value="#{tours_carBean.list}" var="c">
-                    <h:column>
-                        <f:facet name="header">ID</f:facet>
-                            #{c.tours_car_id}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">car type</f:facet>
-                            #{c.car_type}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">driver name</f:facet>
-                            #{c.driver_name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">hotels NAME</f:facet>
-                            #{c.hotel.hotel_area}
-                    </h:column>
+            <h:commandButton rendered="#{tours_carBean.entity.tours_car_id==0}"  action="#{tours_carBean.create}" value ="create" >
+                <f:ajax execute="tours_car_form" render="tours_car_form tours_car_table" />
+            </h:commandButton>
+            <h:commandButton rendered="#{tours_carBean.entity.tours_car_id!=0}"  action="#{tours_carBean.update}" value ="update" >
+                <f:ajax execute="tours_car_form" render="tours_car_form tours_car_table" />
+            </h:commandButton>
+            <h:commandButton rendered="#{tours_carBean.entity.tours_car_id!=0}" action="#{tours_carBean.clear}" value="Clear Form" >
+                <f:ajax execute="tours_car_form" render="tours_car_form" />
+            </h:commandButton>
+
+        </h:form>
+        <hr/>
 
 
-                    <h:column>
-                        <f:facet name="header">ADMINISTRATION</f:facet>
-                        <h:commandButton styleClass="btn btn-danger btn-sm" action="#{tours_carBean.delete(c)}" value ="sil"/>
-                        <h:commandButton styleClass="btn btn-primary btn-sm" action="#{tours_carBean.setEntity(c)}" value ="edit"/>
-                    </h:column>
+        <h:form id="tours_car_table">
+            <pre> Page #{tours_carBean.page} of #{tours_carBean.pageCount}</pre>
+            <div class="btn-group">
+                <h:commandButton action="#{tours_carBean.previous}" value="Previous" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="tours_car_table" render="tours_car_table" />
+                </h:commandButton>
+                <h:commandButton action="#{tours_carBean.next}" value="Next" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="tours_car_table" render="tours_car_table" />
+                </h:commandButton>
 
-                </h:dataTable>
-            </h:form>
-        </div>
-    </h:body>
+            </div>
+            <h:dataTable styleClass="table table-bordered" value="#{tours_carBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{c.tours_car_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">ARABA MODELİ</f:facet>
+                        #{c.car_type}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">SÜRÜCÜ İSMİ</f:facet>
+                        #{c.driver_name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">OTELLER</f:facet>
+                        #{c.hotel.hotel_area}
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">ADMINISTRATION</f:facet>
+                    <h:commandButton  styleClass="btn btn-danger" action="#{tours_carBean.delete(c)}" value ="sil" >
+                        <f:ajax execute="tours_car_table" render="tours_car_table tours_car_form" />
+                    </h:commandButton>
+                    <h:commandButton action="#{tours_carBean.setEntity(c)}" value ="edit" >
+                        <f:ajax execute="tours_car_table" render="tours_car_form" />
+                    </h:commandButton>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+    </body>
 </html>
 
