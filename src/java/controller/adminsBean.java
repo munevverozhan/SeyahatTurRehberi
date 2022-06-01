@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  *
- * @author munevver
+ * @author
  */
 @Named(value = "adminsBean")
 @SessionScoped
@@ -40,9 +40,57 @@ public class adminsBean implements Serializable {
         }
         return true;
     }
+
     private admins entity;
     private adminsDAO dao;
     private List<admins> list;
+
+    private int page = 1;
+    private int pageSize = 4;
+    private int pageCount;
+
+    public void next() {
+        if (this.page == pageCount)// sonraki sayfaya geçecek metod.
+        {
+            this.page = 1;
+        } else {
+            this.page++;
+        }
+
+    }
+
+    public void previous() {// önceki sayfaya geçecek metod.
+        if (this.page == 1) {
+            this.page = this.getPageCount();
+        } else {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() { // kaç tane sayfamız olduğunu bulacak olan metod.
+        this.pageCount = (int) Math.ceil(this.getDao().count() / (double) pageSize);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
 
     public admins getEntity() {
         if (this.entity == null) {
@@ -67,7 +115,7 @@ public class adminsBean implements Serializable {
     }
 
     public List<admins> getList() {
-        this.list = this.getDao().getAdminsList();
+        this.list = this.getDao().getAdminsList(page, pageSize);
         return list;
     }
 
@@ -91,4 +139,9 @@ public class adminsBean implements Serializable {
         this.entity = new admins();
     }
 
+    public void clear() {
+
+        entity = new admins();
+
+    }
 }

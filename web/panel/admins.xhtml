@@ -5,39 +5,61 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>admins</title>
+
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 
     </h:head>
+
     <h:body>
-        <h:form>
-            <h:commandButton styleClass="btn btn-secondary"  action="/index" value="&larr; Home"/>
+        <div class="container mt-5">
 
-        </h:form>
-        <hr/>
-
-
-        <div class="container mt-3">
-            <label class="form-label">Title</label>
             <h:form>
-                mail:  <h:inputText id="mail_id" value="#{adminsBean.entity.mail}" required="true" requiredMessage="Lütfen bir mail adresi giriniz."/>
-                <h:message for="mail_id" style="color:red"/><br/>
-
-                sifre: <h:inputSecret id="password_id" validator="#{adminsBean.validatePassword}" value="#{adminsBean.entity.passwords}"/>
-                <h:message for="password_id" style="color:red"/><br/>
-                <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{adminsBean.entity.admins_id==0}"  action="#{adminsBean.create}" value ="create"/>
-                <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{adminsBean.entity.admins_id!=0}"  action="#{adminsBean.update}" value ="update"/>
-                <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{adminsBean.entity.admins_id!=0}" action="#{adminsBean.clear}" value="Clear Form"/>
+                <h:commandButton action="/index" value="Home"/>
 
             </h:form>
-            <h:form>
-                <h:dataTable styleClass="table table-striped" border="1" value="#{adminsBean.list}" var="c">
+            <hr/>
+
+
+
+            <h:form id="admins_form">
+                mail adresi:  <h:inputText id="mail_id" value="#{adminsBean.entity.mail}" required="true" requiredMessage="Lütfen bir mail adresi giriniz."/>
+                <h:message for="mail_id" style="color:red"/><br/>
+
+                şifre: <h:inputText id="password_id" validator="#{adminsBean.validatePassword}" value="#{adminsBean.entity.passwords}"/>
+                <h:message for="password_id" style="color:red"/><br/>
+
+                <h:commandButton rendered="#{adminsBean.entity.admins_id==0}"  action="#{adminsBean.create}" value ="create">
+                    <f:ajax execute="admins_form" render="admins_form admins_table" />
+                </h:commandButton>
+
+                <h:commandButton rendered="#{adminsBean.entity.admins_id!=0}"  action="#{adminsBean.update}" value ="update">
+                    <f:ajax execute="admins_form" render="admins_form admins_table" />
+                </h:commandButton>
+
+                <h:commandButton rendered="#{adminsBean.entity.admins_id!=0}" action="#{adminsBean.clear}" value="Clear Form">
+                    <f:ajax execute="admins_form" render="admins_form" />
+                </h:commandButton>
+            </h:form>
+
+            <h:form id="admins_table">
+                <pre> Page #{adminsBean.page} of #{adminsBean.pageCount}</pre>
+                <div class="btn-group">
+                    <h:commandButton action="#{adminsBean.previous}" value="Previous" styleClass="btn btn-outline-dark" >
+                        <f:ajax execute="admins_table" render="admins_table" />
+                    </h:commandButton>
+                    <h:commandButton action="#{adminsBean.next}" value="Next" styleClass="btn btn-outline-dark" >
+                        <f:ajax execute="admins_table" render="admins_table" />
+                    </h:commandButton>
+
+                </div>
+                <h:dataTable styleClass="table table-bordered" value="#{adminsBean.list}" var="c">
                     <h:column>
                         <f:facet name="header">ID</f:facet>
                             #{c.admins_id}
                     </h:column>
                     <h:column>
                         <f:facet name="header">MAIL</f:facet>
-                            #{c.mail}
+                        #{c.mail}"
                     </h:column>
                     <h:column>
                         <f:facet name="header">PASSWORD</f:facet>
@@ -46,12 +68,20 @@
 
                     <h:column>
                         <f:facet name="header">ADMINISTRATION</f:facet>
-                        <h:commandButton styleClass="btn btn-danger btn-sm" action="#{adminsBean.delete(c)}" value ="sil"/>
-                        <h:commandButton styleClass="btn btn-primary btn-sm" action="#{adminsBean.setEntity(c)}" value ="edit"/>
+                        <h:commandButton action="#{adminsBean.delete(c)}" styleClass="btn btn-danger"  value ="sil">
+                            <f:ajax execute="admins_table" render="admins_form admins_table" />
+                        </h:commandButton>
+
+                        <h:commandButton action="#{adminsBean.setEntity(c)}" value ="edit" >
+                            <f:ajax execute="admins_table" render="admins_form" />
+                        </h:commandButton>
                     </h:column>
 
                 </h:dataTable>
             </h:form>
+
+
         </div>
+
     </h:body>
 </html>
