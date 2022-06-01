@@ -6,68 +6,86 @@
     <h:head>
         <title> Agreement</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
     </h:head>
     <h:body>
-        <div class="container mt-3">
-        <h:form>
-            <h:commandButton styleClass="btn btn-secondary"  action="/index" value="&larr; Home"/>
-
-        </h:form>
-        <hr/>
-         <div class="container mt-3">
+        <div class="container mt-5">
 
 
+            <h:form>
+                <h:commandButton action="/index" value="Home"/>
 
-        <h:form>
-            users: <h:selectOneMenu value="#{agreementBean.entity.users}" converter="usersConverter">
-                <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}">
-                </f:selectItems>
-            </h:selectOneMenu>
-
-            date: <h:inputText id="date_id" value="#{agreementBean.entity.agreement_date}" required="true" requiredMessage="Lütfen bir sözleşme tarihi giriniz."/>
-            <h:message for="date_id" style="color: red" /> <br/>
-            name: <h:inputText id="name_id" value="#{agreementBean.entity.name}" required="true" requiredMessage=" Lütfen bir sözleşme ismi giriniz."/>
-            <h:message for="name_id" style="color: red" /> <br/>
-
-            <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{agreementBean.entity.agreement_id==0}"  action="#{agreementBean.create}" value ="create"/>
-            <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{agreementBean.entity.agreement_id!=0}"  action="#{agreementBean.update}" value ="update"/>
-
-        </h:form>
-        <hr/>
-
-
-        <h:form>
-            <h:dataTable styleClass="table table-striped" border="1" value="#{agreementBean.list}" var="c">
-                <h:column>
-                    <f:facet name="header">ID</f:facet>
-                        #{c.agreement_id}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Name</f:facet>
-                        #{c.name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">DATE</f:facet>
-                        #{c.agreement_date}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">FIRST NAME</f:facet>
-                    <ul class="list-group">
-                        
-                        #{c.users.first_name}
-                    </ul>    
-                </h:column>
-
-
-                <h:column>
-                    <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton styleClass="btn btn-danger btn-sm" action="#{agreementBean.delete(c)}" value ="sil"/>
-                    <h:commandButton styleClass="btn btn-primary btn-sm" action="#{agreementBean.setEntity(c)}" value ="edit"/>
-                </h:column>
-
-            </h:dataTable>
-        </h:form>
+            </h:form>
+            <hr/>
         </div>
+
+        <div class="container mt-5">
+            <h:form id="agreement_form">
+                bir kullanıcı seçiniz: <h:selectOneMenu value="#{agreementBean.entity.users}" converter="usersConverter">
+                    <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}">
+                    </f:selectItems>
+                </h:selectOneMenu> <br/>
+
+                anlaşma tarihi: <h:inputText id="date_id" value="#{agreementBean.entity.agreement_date}" required="true" requiredMessage="Lütfen bir sözleşme tarihi giriniz."/>
+                <h:message for="date_id" style="color: red" /> <br/>
+                anlaşma adı: <h:inputText id="name_id" value="#{agreementBean.entity.name}" required="true" requiredMessage=" Lütfen bir sözleşme ismi giriniz."/>
+                <h:message for="name_id" style="color: red" /> <br/>
+
+                <h:commandButton rendered="#{agreementBean.entity.agreement_id==0}"  action="#{agreementBean.create}" value ="create" >
+                    <f:ajax execute="agreement_form" render="agreement_form agreement_table" /><!-- ajax işlemi -->
+                </h:commandButton>
+                <h:commandButton rendered="#{agreementBean.entity.agreement_id!=0}"  action="#{agreementBean.update}" value ="update" >
+                    <f:ajax execute="agreement_form" render="agreement_form agreement_table" /><!-- ajax işlemi -->
+                </h:commandButton>
+                <h:commandButton rendered="#{agreementBean.entity.agreement_id!=0}" action="#{agreementBean.clear}" value="Clear Form">
+                    <f:ajax execute="agreement_form" render="agreement_form" />
+                </h:commandButton>
+            </h:form>
+            <hr/>
+        </div>
+        <div class="container mt-5">
+            <h:form id="agreement_table">
+                <pre> Page #{agreementBean.page} of #{agreementBean.pageCount}</pre>
+                <div class="btn-group">
+                    <h:commandButton action="#{agreementBean.previous}" value="Previous" styleClass="btn btn-outline-dark" >
+                        <f:ajax execute="agreement_table" render="agreement_table" />
+                    </h:commandButton>
+                    <h:commandButton action="#{agreementBean.next}" value="Next" styleClass="btn btn-outline-dark" >
+                        <f:ajax execute="agreement_table" render="agreement_table" />
+                    </h:commandButton>
+
+                </div>
+                <h:dataTable styleClass="table table-bordered" value="#{agreementBean.list}" var="c">
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                            #{c.agreement_id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">NAME</f:facet>
+                            #{c.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">DATE</f:facet>
+                            #{c.agreement_date}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">FIRST NAME</f:facet>
+                            #{c.users.first_name}
+                    </h:column>
+
+
+                    <h:column>
+                        <f:facet name="header">ADMINISTRATION</f:facet>
+                        <h:commandButton  styleClass="btn btn-danger" action="#{agreementBean.delete(c)}" value ="sil">
+                            <f:ajax execute="agreement_table" render="agreement_form agreement_table" />
+                        </h:commandButton>
+                        <h:commandButton action="#{agreementBean.setEntity(c)}" value ="edit">
+                            <f:ajax execute="agreement_table" render="agreement_form" />
+                        </h:commandButton>                            
+                    </h:column>
+
+                </h:dataTable>
+            </h:form>
         </div>
     </h:body>
 </html>
