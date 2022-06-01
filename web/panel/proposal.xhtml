@@ -6,47 +6,75 @@
     <h:head>
         <title>proposal</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
     </h:head>
-   <h:body>
+    <body>
         <h:form>
-            <h:commandButton styleClass="btn btn-secondary" action="/index" value="&larr; Home"/>
+            <h:commandButton action="/index" value="Home"/>
+
 
         </h:form>
         <hr/>
 
-         <div class="container mt-5">
 
 
-        <h:form>
-             name:  <h:inputText id="name_id" value="#{proposalBean.entity.proposal_name}" required="true" requiredMessage="Lütfen öneri ismi giriniz."/>
+        <h:form id="proposal_form" >
+            Öneri Konusu:  <h:inputText id="name_id" value="#{proposalBean.entity.proposal_name}" required="true" requiredMessage="Lütfen öneri ismi giriniz."/>
             <h:message for="name_id" style="color: red"/> <br/>
-            context: <h:inputText id="context_id" value="#{proposalBean.entity.context}" required="true" requiredMessage="Lütfen açıklama giriniz."/>
+            Öneri içeriği: <h:inputText id="context_id" value="#{proposalBean.entity.context}" required="true" requiredMessage="Lütfen açıklama giriniz."/>
             <h:message for="context_id" style="color: red"/> <br/>
-            <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{proposalBean.entity.proposal_id==0}"  action="#{proposalBean.create}" value ="create"/>
-            <h:commandButton styleClass="btn btn-info btn-sm"  rendered="#{proposalBean.entity.proposal_id!=0}"  action="#{proposalBean.update}" value ="update"/>
-            <h:commandButton styleClass="btn btn-info btn-sm"  rendered="#{proposalBean.entity.proposal_id!=0}" action="#{proposalBean.clear}" value="Clear Form"/>
+
+            <h:commandButton rendered="#{proposalBean.entity.proposal_id==0}"  action="#{proposalBean.create}" value ="create" >
+                <f:ajax execute="proposal_form" render="proposal_form proposal_table" />
+            </h:commandButton>
+
+            <h:commandButton rendered="#{proposalBean.entity.proposal_id!=0}"  action="#{proposalBean.update}" value ="update" >
+                <f:ajax execute="proposal_form" render="proposal_form proposal_table" />
+            </h:commandButton>
+
+            <h:commandButton rendered="#{proposalBean.entity.proposal_id!=0}" action="#{proposalBean.clear}" value="Clear Form" >
+                <f:ajax execute="proposal_form" render="proposal_form" />
+            </h:commandButton>
+
 
         </h:form>
-        <h:form>
-            <h:dataTable styleClass="table table-striped" border="1" value="#{proposalBean.list}" var="c">
+        <h:form id="proposal_table" >
+            <pre> Page #{proposalBean.page} of #{proposalBean.pageCount}</pre>
+            <div class="btn-group">
+                <h:commandButton action="#{proposalBean.previous}" value="Previous" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="proposal_table" render="proposal_table" />
+                </h:commandButton>
+
+                <h:commandButton action="#{proposalBean.next}" value="Next" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="proposal_table" render="proposal_table" />
+                </h:commandButton>
+
+
+            </div>
+            <h:dataTable styleClass="table table-bordered" value="#{proposalBean.list}" var="c">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
                         #{c.proposal_id}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">name</f:facet>
+                    <f:facet name="header">ÖNERİ KONUSU</f:facet>
                         #{c.proposal_name}
                 </h:column>
-              
+
 
                 <h:column>
                     <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton styleClass="btn btn-danger btn-sm" action="#{proposalBean.delete(c)}" value ="sil"/>
-                    <h:commandButton styleClass="btn btn-primary btn-sm" action="#{proposalBean.setEntity(c)}" value ="edit"/>
+                    <h:commandButton  styleClass="btn btn-danger"  action="#{proposalBean.delete(c)}" value ="sil" >
+                        <f:ajax execute="proposal_table" render="proposal_table proposal_form" />
+                    </h:commandButton>
+
+                    <h:commandButton action="#{proposalBean.setEntity(c)}" value ="edit" >
+                        <f:ajax execute="proposal_table" render="proposal_form" />
+                    </h:commandButton>
+
                 </h:column>
 
             </h:dataTable>
         </h:form>
-         </div>
-    </h:body>
+    </body>
 </html>

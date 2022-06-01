@@ -16,6 +16,7 @@ import java.sql.ResultSet;
  * @author DELL
  */
 public class proposalDAO extends DBConnection {
+
     public proposal findByID(int proposal_id) {
         proposal c = null;
         try {
@@ -35,18 +36,17 @@ public class proposalDAO extends DBConnection {
 
     }
 
-
     public void create(proposal c) {
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "insert into proposal(proposal_name,context) values('" + c.getProposal_name() + "','"+c.getContext()+"')";
+            String query = "insert into proposal(proposal_name,context) values('" + c.getProposal_name() + "','" + c.getContext() + "')";
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
 
     public void delete(proposal c) {
@@ -65,7 +65,7 @@ public class proposalDAO extends DBConnection {
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "update proposal set proposal_name='" + c.getProposal_name() + "',context='"+c.getContext()+"' where proposal_id=" + c.getProposal_id();
+            String query = "update proposal set proposal_name='" + c.getProposal_name() + "',context='" + c.getContext() + "' where proposal_id=" + c.getProposal_id();
             int r = st.executeUpdate(query);
 
         } catch (Exception e) {
@@ -73,15 +73,17 @@ public class proposalDAO extends DBConnection {
         }
     }
 
-    public List<proposal> getProposalList() {
+    public List<proposal> getProposalList(int page, int pageSize) {
         List<proposal> proposalList = new ArrayList<>();
+
+        int start = (page - 1) * pageSize;
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "select * from proposal order by proposal_id asc";
+            String query = "select * from proposal order by proposal_id asc limit " + pageSize + " offset " + start;
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                proposalList.add(new proposal(rs.getInt("proposal_id"), rs.getString("proposal_name"),rs.getString("context")));
+                proposalList.add(new proposal(rs.getInt("proposal_id"), rs.getString("proposal_name"), rs.getString("context")));
 
             }
 
@@ -89,5 +91,21 @@ public class proposalDAO extends DBConnection {
             System.out.println(e.getMessage());
         }
         return proposalList;
+    }
+
+    public int count() {
+        int count = 0;
+        try {
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select count(proposal_id) as proposal_count from proposal ";
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("proposal_count");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 }
