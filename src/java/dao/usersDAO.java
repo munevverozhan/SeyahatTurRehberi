@@ -13,7 +13,7 @@ import util.DBConnection;
 
 /**
  *
- * @author serpl
+ * @author munevver
  */
 public class usersDAO extends DBConnection {
 
@@ -73,12 +73,14 @@ public class usersDAO extends DBConnection {
         }
     }
 
-    public List<users> getUsersList() {
+    public List<users> getUsersList(int page, int pageSize) {
         List<users> usersList = new ArrayList<>();
+
+        int start = (page - 1) * pageSize;
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "select * from users";
+            String query = "select * from users order by users_id asc limit " + pageSize + " offset " + start;
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 usersList.add(new users(rs.getInt("users_id"), rs.getString("mail"), rs.getString("passwords"), rs.getString("first_name"), rs.getString("last_name")));
@@ -89,6 +91,22 @@ public class usersDAO extends DBConnection {
             System.out.println(e.getMessage());
         }
         return usersList;
+    }
+
+    public int count() {
+        int count = 0;
+        try {
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select count(users_id) as users_count from users ";
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("users_count");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 
 }
