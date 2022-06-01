@@ -1,55 +1,70 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>consideration</title>
+        <title>YORUM</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
     </h:head>
-     <h:body>
-         
+    <h:body>
         <h:form>
-            <h:commandButton styleClass="btn btn-secondary" action="/index" value="&larr; Home"/>
+            <h:commandButton action="/index" value="Home"/>
 
         </h:form>
         <hr/>
-        <div class="container mt-5">
 
-        <h:form>
-            <div class="mb-3">
+        <h:form id="consideration_form">
+            Yorum ekleyen kişi-kişiler:
             <h:selectManyMenu
                 value="#{considerationBean.entity.useries}" converter="usersConverter">
                 <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
-                
+
             </h:selectManyMenu>
-            </div>    
-             <div class="mb-3">
-                
-           yorum: <h:inputTextarea id="yorum_id" value="#{considerationBean.entity.context}" required="true" requiredMessage="Lütfen yorum giriniz." />
+            <br/>
+
+            Yorum ekleyiniz: <h:inputTextarea id="yorum_id" value="#{considerationBean.entity.context}" required="true" requiredMessage="Lütfen yorum giriniz." />
             <h:message for="yorum_id" style="color: crimson" /> <br/>
-             </div>
-            <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{considerationBean.entity.consideration_id==0}" action="#{considerationBean.create}" value="create"/>
-            <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{considerationBean.entity.consideration_id!=0}" action="#{considerationBean.update}" value="update"/>
+
+            <h:commandButton rendered="#{considerationBean.entity.consideration_id==0}" action="#{considerationBean.create}" value="create" >
+                <f:ajax execute="consideration_form" render="consideration_form consideration_table" /><!-- comment -->
+            </h:commandButton>
+            <h:commandButton rendered="#{considerationBean.entity.consideration_id!=0}" action="#{considerationBean.update}" value="update" >
+                <f:ajax execute="consideration_form" render="consideration_form consideration_table" /><!-- comment -->
+            </h:commandButton>
+            <h:commandButton rendered="#{considerationBean.entity.consideration_id!=0}" action="#{considerationBean.clear}" value="Clear Form">
+                <f:ajax execute="consideration_form" render="consideration_form" />
+            </h:commandButton>
 
         </h:form>
         <hr/>
-         <div class="container mt-5">
-        <h:form>
-            <h:dataTable styleClass="table table-striped" border="1"  value="#{considerationBean.list}" var="entity">
+        <h:form id="consideration_table">
+            <pre> Page #{considerationBean.page} of #{considerationBean.pageCount}</pre>
+            <div class="btn-group">
+                <h:commandButton action="#{considerationBean.previous}" value="Previous" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="consideration_table" render="consideration_table" />
+                </h:commandButton>
+                <h:commandButton action="#{considerationBean.next}" value="Next" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="consideration_table" render="consideration_table" />
+                </h:commandButton>
+
+
+            </div>
+            <h:dataTable styleClass="table table-bordered"  value="#{considerationBean.list}" var="entity">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
                         #{entity.consideration_id}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">yorum</f:facet>
+                    <f:facet name="header">YORUM</f:facet>
                         #{entity.context}
                 </h:column>
-              
-                 <h:column>
-                    <f:facet name="header">users</f:facet>
-                           <ul>
+
+                <h:column>
+                    <f:facet name="header"> YORUM EKLEYEN KİŞİLER</f:facet>
+                    <ul>
                         <ui:repeat value="#{entity.useries}" var="k">
                             <li>#{k.first_name}</li>
                         </ui:repeat>
@@ -58,14 +73,16 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton styleClass="btn btn-danger btn-sm" action="#{considerationBean.delete(entity)}" value ="sil"/>
-                    <h:commandButton styleClass="btn btn-primary btn-sm" action="#{considerationBean.setEntity(entity)}" value ="edit"/>
+                    <h:commandButton  styleClass="btn btn-danger" action="#{considerationBean.delete(entity)}" value ="sil" >
+                        <f:ajax execute="consideration_table" render="consideration_table consideration_form" />
+                    </h:commandButton>
+                    <h:commandButton action="#{considerationBean.setEntity(entity)}" value ="edit" >
+                        <f:ajax execute="consideration_table" render="consideration_form" />
+                    </h:commandButton>
                 </h:column>
 
             </h:dataTable>
         </h:form>
-         </div>
-             </div>
 
     </h:body>
 </html>

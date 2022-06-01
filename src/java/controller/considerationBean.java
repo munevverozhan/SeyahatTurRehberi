@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author aysetunc
+ * @author serpl
  */
 @Named(value = "considerationBean")
 @SessionScoped
@@ -28,6 +28,53 @@ public class considerationBean implements Serializable {
     private consideration entity;
     private considerationDAO dao;
     private List<consideration> list;
+
+    private int page = 1;
+    private int pageSize = 10;
+    private int pageCount;
+
+    public void next() {
+        if (this.page == pageCount)// sonraki sayfaya geçecek metod.
+        {
+            this.page = 1;
+        } else {
+            this.page++;
+        }
+
+    }
+
+    public void previous() {// önceki sayfaya geçecek metod.
+        if (this.page == 1) {
+            this.page = this.getPageCount();
+        } else {
+            this.page--;
+        }
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageCount() { // kaç tane sayfamız olduğunu bulacak olan metod.
+        this.pageCount = (int) Math.ceil(this.getDao().count() / (double) pageSize);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
 
     public consideration getEntity() {
         if (this.entity == null) {
@@ -53,7 +100,7 @@ public class considerationBean implements Serializable {
     }
 
     public List<consideration> getList() {
-        this.list = this.getDao().getConsiderationList();
+        this.list = this.getDao().getConsiderationList(page, pageSize);
         return list;
     }
 
@@ -69,7 +116,7 @@ public class considerationBean implements Serializable {
 
         this.getDao().create(entity);
         this.entity = new consideration();
-        
+
     }
 
     public void update() {
@@ -77,5 +124,7 @@ public class considerationBean implements Serializable {
         this.entity = new consideration();
     }
 
+    public void clear() {
+        entity = new consideration();
+    }
 }
-

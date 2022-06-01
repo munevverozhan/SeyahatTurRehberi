@@ -11,23 +11,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import util.DBConnection;
+import java.sql.PreparedStatement;
 
 /**
  *
- * @author aysetunc
+ * @author serpl
  */
 public class considerationDAO extends DBConnection {
 
     private usersDAO usersDao;
+
     public consideration findByID(int consideration_id) {
         consideration c = null;
         try {
+
             Statement st = this.getConnection().createStatement();
 
             String query = "select * from consideration where consideration_id=" + consideration_id;
-
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
+
                 c = (new consideration(rs.getInt("consideration_id"), rs.getString("context")));
 
             }
@@ -40,6 +43,7 @@ public class considerationDAO extends DBConnection {
 
     public void create(consideration c) {
         try {
+
             Statement st = this.getConnection().createStatement();
 
             String query = "insert into consideration(context) values('" + c.getContext() + "')";
@@ -49,6 +53,7 @@ public class considerationDAO extends DBConnection {
             int consideration_id = rs.getInt("mid");
 
             for (users user : c.getUseries()) {
+
                 query = "insert into kullanici_deger(consideration_id,users_id) values(" + consideration_id + "," + user.getUsers_id() + ")";
                 st.executeUpdate(query);
 
@@ -90,15 +95,17 @@ public class considerationDAO extends DBConnection {
             System.out.println(e.getMessage());
         }
     }
-    public List<consideration> getConsiderationList() {
+
+    public List<consideration> getConsiderationList(int page, int pageSize) {
         List<consideration> considerationList = new ArrayList<>();
+        int start = (page - 1) * pageSize;
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "select * from consideration order by consideration_id asc";
+            String query = "select * from consideration order by consideration_id asc limit " + pageSize + " offset " + start;
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                considerationList.add(new consideration(rs.getInt("consideration_id"), rs.getString("context"),this.getConsiderationUser(rs.getInt("consideration_id"))));
+                considerationList.add(new consideration(rs.getInt("consideration_id"), rs.getString("context"), this.getConsiderationUser(rs.getInt("consideration_id"))));
 
             }
 
@@ -107,7 +114,24 @@ public class considerationDAO extends DBConnection {
         }
         return considerationList;
     }
-     public List<users> getConsiderationUser(int consideration_id) {
+
+    public int count() {
+        int count = 0;
+        try {
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select count(consideration_id) as consideration_count from consideration ";
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("consideration_count");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }
+
+    public List<users> getConsiderationUser(int consideration_id) {
         List<users> usersList = new ArrayList<>();
         try {
             Statement st = this.getConnection().createStatement();
@@ -125,7 +149,7 @@ public class considerationDAO extends DBConnection {
     }
 
     public usersDAO getUsersDao() {
-         if (usersDao == null) {
+        if (usersDao == null) {
             this.usersDao = new usersDAO();
         }
         return usersDao;
@@ -134,5 +158,5 @@ public class considerationDAO extends DBConnection {
     public void setUsersDao(usersDAO usersDao) {
         this.usersDao = usersDao;
     }
-     
+
 }
