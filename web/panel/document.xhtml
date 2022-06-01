@@ -9,16 +9,24 @@
 
     </h:head>
     <h:body>
+        <h:form>
+            <h:commandButton action="/index" value="Home"/>
 
-        <h:form enctype="multipart/form-data">
+        </h:form>
+        <hr/>
+
+
+        <h:form enctype="multipart/form-data" id="document_form">
             <div class="form-group">
                 <label>File</label>
                 <h:inputFile value="#{documentController.doc}" styleClass="custom-file"/>
             </div>
-            <h:commandButton action="#{documentController.upload}" value="Upload" styleClass="btn btn-primary"/>
+            <h:commandButton action="#{documentController.upload}" value="Upload" styleClass="btn btn-primary" >
+                <f:ajax execute="document_form" render="document_form document_table" />
+            </h:commandButton>
         </h:form>
         <hr/>
-        <h:form>
+        <h:form id="document_table">
             <h:dataTable styleClass="table" value="#{documentController.documentList}" var="d">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
