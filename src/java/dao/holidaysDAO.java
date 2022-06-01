@@ -14,7 +14,7 @@ import util.DBConnection;
 
 /**
  *
- * @author aysetunc
+ * @author serpl
  */
 public class holidaysDAO extends DBConnection {
 
@@ -38,6 +38,7 @@ public class holidaysDAO extends DBConnection {
         return c;
 
     }
+
     public void createHolidays(holidays c) {
         try {
             Statement st = this.getConnection().createStatement();
@@ -92,12 +93,14 @@ public class holidaysDAO extends DBConnection {
         }
     }
 
-    public List<holidays> getHolidaysList() {
+    public List<holidays> getHolidaysList(int page, int pageSize) {
         List<holidays> holidaysList = new ArrayList<>();
+        int start = (page - 1) * pageSize;
+
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "select * from holidays order by holidays_id asc ";
+            String query = "select * from holidays order by holidays_id asc limit " + pageSize + " offset " + start;
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 holidaysList.add(new holidays(rs.getInt("holidays_id"), rs.getString("holiday_name"), rs.getString("holiday_date"), this.getHolidaysUseries(rs.getInt("holidays_id"))));
@@ -108,6 +111,22 @@ public class holidaysDAO extends DBConnection {
             System.out.println(e.getMessage());
         }
         return holidaysList;
+    }
+
+    public int count() {
+        int count = 0;
+        try {
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select count(holidays_id) as holidays_count  from holidays ";
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("holidays_count");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 
     public List<users> getHolidaysUseries(int holidays_id) {

@@ -7,57 +7,69 @@
     <h:head>
         <title>holidays</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
     </h:head>
-     <h:body>
+    <h:body>
         <h:form>
-            <h:commandButton styleClass="btn btn-secondary" action="/index" value="&larr; Home"/>
+            <h:commandButton action="/index" value="Home"/>
 
         </h:form>
         <hr/>
-        
 
-         <div class="container mt-5">
-             
-            
-        <h:form>
-            <div class="m-3">
-                <label class="form-label">Holidays</label><br></br>
-            users:
+        <h:form id="holidays_form">
+            Tatile katılacak kişi-kişiler:
             <h:selectManyMenu
                 value="#{holidaysBean.entity.useries}" converter="usersConverter">
                 <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
-                
+
             </h:selectManyMenu>
             <br/>
-                
-            name: <h:inputText  id="name_id" value="#{holidaysBean.entity.holiday_name}" required="true" requiredMessage="Lütfen tatil ismi giriniz." />
+
+            Tatil ismi: <h:inputText  id="name_id" value="#{holidaysBean.entity.holiday_name}" required="true" requiredMessage="Lütfen tatil ismi giriniz." />
             <h:message for="name_id" style="color: mediumvioletred" /> <br/>
 
-            date: <h:inputTextarea id="date_id" value="#{holidaysBean.entity.holiday_date}" required="true" requiredMessage="Lütfen randevu tarihi giriniz." />
+            Tatil tarihi: <h:inputTextarea id="date_id" value="#{holidaysBean.entity.holiday_date}" required="true" requiredMessage="Lütfen randevu tarihi giriniz." />
             <h:message for="date_id" style="color: #dc3545" /><br/>
 
-            <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{holidaysBean.entity.holidays_id==0}" action="#{holidaysBean.createHolidays}" value="create"/>
-            <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{holidaysBean.entity.holidays_id!=0}" action="#{holidaysBean.update}" value="update"/>
-            </div>
+            <h:commandButton rendered="#{holidaysBean.entity.holidays_id==0}" action="#{holidaysBean.createHolidays}" value="create" >
+                <f:ajax execute="holidays_form" render="holidays_form holidays_table" />
+            </h:commandButton>
+            <h:commandButton rendered="#{holidaysBean.entity.holidays_id!=0}" action="#{holidaysBean.update}" value="update" >
+                <f:ajax execute="holidays_form" render="holidays_form holidays_table" />
+            </h:commandButton>
+            <h:commandButton rendered="#{holidaysBean.entity.holidays_id!=0}" action="#{holidaysBean.clear}" value="Clear Form">
+                <f:ajax execute="holidays_form" render="holidays_form" />
+            </h:commandButton>
+
         </h:form>
         <hr/>
-        <h:form>
-            <h:dataTable styleClass="table table-striped" border="1"  value="#{holidaysBean.list}" var="entity">
+        <h:form id="holidays_table">
+            <pre> Page #{holidaysBean.page} of #{holidaysBean.pageCount}</pre>
+            <div class="btn-group">
+                <h:commandButton action="#{holidaysBean.previous}" value="Previous" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="holidays_table" render="holidays_table" /><!-- comment -->
+                </h:commandButton>
+                <h:commandButton action="#{holidaysBean.next}" value="Next" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="holidays_table" render="holidays_table" /><!-- comment -->
+                </h:commandButton>
+
+            </div>
+            <h:dataTable styleClass="table table-bordered"  value="#{holidaysBean.list}" var="entity">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
                         #{entity.holidays_id}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">name</f:facet>
+                    <f:facet name="header">TATİL İSMİ</f:facet>
                         #{entity.holiday_name}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">DATE</f:facet>
+                    <f:facet name="header">TARİH</f:facet>
                         #{entity.holiday_date}
                 </h:column>
-                 <h:column>
-                    <f:facet name="header">users</f:facet>
-                           <ul>
+                <h:column>
+                    <f:facet name="header">KATILAN KİŞİLER</f:facet>
+                    <ul>
                         <ui:repeat value="#{entity.useries}" var="k">
                             <li>#{k.first_name}</li>
                         </ui:repeat>
@@ -66,13 +78,17 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">ADMINISTRATION</f:facet>
-                    <h:commandButton styleClass="btn btn-danger btn-sm" action="#{holidaysBean.delete(entity)}" value ="sil"/>
-                    <h:commandButton styleClass="btn btn-primary btn-sm" action="#{holidaysBean.setEntity(entity)}" value ="edit"/>
+                    <h:commandButton  styleClass="btn btn-danger" action="#{holidaysBean.delete(entity)}" value ="sil">
+                        <f:ajax execute="holidays_table" render="holidays_table holidays_form" />
+                    </h:commandButton>
+                    <h:commandButton action="#{holidaysBean.setEntity(entity)}" value ="edit" >
+                        <f:ajax execute="holidays_table" render="holidays_form" />
+                    </h:commandButton>
+
                 </h:column>
 
             </h:dataTable>
         </h:form>
-        </div>
 
     </h:body>
 </html>
