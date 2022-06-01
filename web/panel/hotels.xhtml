@@ -7,75 +7,101 @@
     <h:head>
         <title>hotels</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
     </h:head>
     <h:body>
         <h:form>
-            <h:commandButton styleClass="btn btn-secondary" action="/index" value="&larr; Home"/>
+            <h:commandButton action="/index" value="Home"/>
 
         </h:form>
         <hr/>
-        <div class="container mt-5">
-            <h:form>
+
+        <h:form id="hotels_form" >
+            Otel hakkında yorumlar:
+            <h:selectManyMenu
+                value="#{hotelsBean.entity.cons}" converter="considerationConverter">
+                <f:selectItems value="#{considerationBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.context}"/>
+
+            </h:selectManyMenu>
+            Otelde kalacak kişi: 
+            <h:selectOneMenu value="#{hotelsBean.entity.users}" converter="usersConverter">
+                <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
+
+            </h:selectOneMenu>
+            <br/>
+            Tarih: <h:inputText id="date_id" value="#{hotelsBean.entity.hotel_date}" required="true" requiredMessage="Lütfen bir tarih giriniz." />
+            <h:message for="date_id" style="color: red"/> <br/>
+
+
+            Otel ismi: <h:inputText  id="area_id" value="#{hotelsBean.entity.hotel_area}" required="true" requiredMessage="Lütfen bir otel ismi giriniz."/>
+            <h:message for="area_id" style="color: red"/> <br/>
 
 
 
-                consideration: <h:selectManyMenu
-                    value="#{hotelsBean.entity.cons}" converter="considerationConverter">
-                    <f:selectItems value="#{considerationBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.context}"/>
-                </h:selectManyMenu> <br/>
+            <h:commandButton rendered="#{hotelsBean.entity.hotels_id==0}" action="#{hotelsBean.create}" value="create" >
+                <f:ajax execute="hotels_form" render="hotels_form hotels_table " />
+            </h:commandButton>
 
-                users: <h:selectOneMenu value="#{hotelsBean.entity.users}" converter="usersConverter">
-                    <f:selectItems value="#{usersBean.list}" var="c" itemValue="#{c}" itemLabel="#{c.first_name}"/>
-                </h:selectOneMenu> <br/>
+            <h:commandButton rendered="#{hotelsBean.entity.hotels_id!=0}" action="#{hotelsBean.update}" value="update" >
+                <f:ajax execute="hotels_form" render="hotels_form hotels_table" />
+            </h:commandButton>
 
-                date: <h:inputTextarea id="date_id" value="#{hotelsBean.entity.hotel_date}" required="true" requiredMessage="Lütfen bir tarih giriniz." />
-                <h:message for="date_id" style="color: red"/> <br/>
+            <h:commandButton rendered="#{hotelsBean.entity.hotels_id!=0}" action="#{hotelsBean.clear}" value="Clear Form">
+                <f:ajax execute="hotels_form" render="hotels_form" />
+            </h:commandButton>
 
-                area: <h:inputText  id="area_id" value="#{hotelsBean.entity.hotel_area}" required="true" requiredMessage="Lütfen bir otel ismi giriniz."/>
-                <h:message for="area_id" style="color: red"/> <br/>
+        </h:form>
+        <hr/>
+        <h:form id="hotels_table" >
+            <pre> Page #{hotelsBean.page} of #{hotelsBean.pageCount}</pre>
+            <div class="btn-group">
+                <h:commandButton action="#{hotelsBean.previous}" value="Previous" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="hotels_table" render="hotels_table" /><!-- comment -->
+                </h:commandButton>
 
+                <h:commandButton action="#{hotelsBean.next}" value="Next" styleClass="btn btn-outline-dark" >
+                    <f:ajax execute="hotels_table" render="hotels_table" /><!-- comment -->
+                </h:commandButton>
 
-                <h:commandButton styleClass="btn btn-primary btn-sm" rendered="#{hotelsBean.entity.hotels_id==0}" action="#{hotelsBean.create}" value="create"/>
-                <h:commandButton styleClass="btn btn-info btn-sm" rendered="#{hotelsBean.entity.hotels_id!=0}" action="#{hotelsBean.update}" value="update"/>
+            </div>
+            <h:dataTable styleClass="table table-bordered"  value="#{hotelsBean.list}" var="entity">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{entity.hotels_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">TARİH</f:facet>
+                        #{entity.hotel_date}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">OTEL İSMİ</f:facet>
+                        #{entity.hotel_area}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">OTELDE KALAN KİŞİ</f:facet>
+                        #{entity.users.first_name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">YORUMLAR</f:facet>
+                    <ul>
+                        <ui:repeat value="#{entity.cons}" var="k">
+                            <li>#{k.context}</li>
+                        </ui:repeat>
+                    </ul>
 
-            </h:form>
-            <hr/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">ADMINISTRATION</f:facet>
+                    <h:commandButton  styleClass="btn btn-danger" action="#{hotelsBean.delete(entity)}" value ="sil" >
+                        <f:ajax execute="hotels_table" render="hotels_table hotels_form" />
+                    </h:commandButton>
+                    <h:commandButton action="#{hotelsBean.setEntity(entity)}" value ="edit" >
+                        <f:ajax execute="hotels_table" render="hotels_form" />
+                    </h:commandButton>
+                </h:column>
 
-            <h:form>
-                <h:dataTable styleClass="table table-striped" border="1"  value="#{hotelsBean.list}" var="entity">
-                    <h:column>
-                        <f:facet name="header">ID</f:facet>
-                            #{entity.hotels_id}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">date</f:facet>
-                            #{entity.hotel_date}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">area</f:facet>
-                            #{entity.hotel_area}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">users</f:facet>
-                            #{entity.users.first_name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">considerations</f:facet>
-                        <ul>
-                            <ui:repeat value="#{entity.cons}" var="k">
-                                <li>#{k.context}</li>
-                            </ui:repeat>
-                        </ul>
+            </h:dataTable>
+        </h:form>
 
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">ADMINISTRATION</f:facet>
-                        <h:commandButton styleClass="btn btn-danger btn-sm" action="#{hotelsBean.delete(entity)}" value ="sil"/>
-                        <h:commandButton styleClass="btn btn-primary btn-sm" action="#{hotelsBean.setEntity(entity)}" value ="edit"/>
-                    </h:column>
-
-                </h:dataTable>
-            </h:form>
-        </div>
     </h:body>
 </html>

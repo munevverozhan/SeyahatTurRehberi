@@ -21,6 +21,7 @@ public class hotelsDAO extends DBConnection {
 
     private considerationDAO considerationDao;
     private usersDAO usersDao;
+
     public hotels findByID(int hotels_id) {
         hotels c = null;
         try {
@@ -43,7 +44,7 @@ public class hotelsDAO extends DBConnection {
     public void create(hotels c) {
         try {
             Statement st = this.getConnection().createStatement();
-            String query = "insert into hotels(hotel_date,hotel_area,users_id) values('" + c.getHotel_date() + "', '" + c.getHotel_area() + "',"+c.getUsers().getUsers_id()+" )";
+            String query = "insert into hotels(hotel_date,hotel_area,users_id) values('" + c.getHotel_date() + "', '" + c.getHotel_area() + "'," + c.getUsers().getUsers_id() + " )";
             st.executeUpdate(query);
             ResultSet rs = st.executeQuery("select max(hotels_id) as mid from hotels");
             rs.next();
@@ -78,7 +79,7 @@ public class hotelsDAO extends DBConnection {
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "update hotels set hotel_date='" + c.getHotel_date() + "',hotel_area='" + c.getHotel_area() + "',users_id="+c.getUsers().getUsers_id()+" where  hotels_id=" + c.getHotels_id();
+            String query = "update hotels set hotel_date='" + c.getHotel_date() + "',hotel_area='" + c.getHotel_area() + "',users_id=" + c.getUsers().getUsers_id() + " where  hotels_id=" + c.getHotels_id();
             st.executeUpdate(query);
             st.executeUpdate("delete from otel_yorum where hotels_id=" + c.getHotels_id());
 
@@ -93,16 +94,18 @@ public class hotelsDAO extends DBConnection {
         }
     }
 
-    public List<hotels> getHotelsList() {
+    public List<hotels> getHotelsList(int page, int pageSize) {
         List<hotels> hotelsList = new ArrayList<>();
+        int start = (page - 1) * pageSize;
+
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "select * from hotels order by hotels_id asc";
+            String query = "select * from hotels order by hotels_id asc limit " + pageSize + " offset " + start;
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                users u=this.getUsersDao().findByID(rs.getInt("users_id"));
-                hotelsList.add(new hotels(rs.getInt("hotels_id"), rs.getString("hotel_date"), rs.getString("hotel_area"),this.getConsiderationHotels(rs.getInt("hotels_id")),u));
+                users u = this.getUsersDao().findByID(rs.getInt("users_id"));
+                hotelsList.add(new hotels(rs.getInt("hotels_id"), rs.getString("hotel_date"), rs.getString("hotel_area"), this.getConsiderationHotels(rs.getInt("hotels_id")), u));
 
             }
 
@@ -110,6 +113,22 @@ public class hotelsDAO extends DBConnection {
             System.out.println(e.getMessage());
         }
         return hotelsList;
+    }
+
+    public int count() {
+        int count = 0;
+        try {
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select count(hotels_id) as hotels_count from hotels";
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("hotels_count");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 
     public List<consideration> getConsiderationHotels(int hotels_id) {
@@ -151,6 +170,4 @@ public class hotelsDAO extends DBConnection {
         this.usersDao = usersDao;
     }
 
-    
 }
-
