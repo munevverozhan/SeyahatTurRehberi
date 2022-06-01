@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author serpl
+ * @author DELL
  */
 public class tour_guideDAO extends DBConnection {
 
@@ -27,7 +27,7 @@ public class tour_guideDAO extends DBConnection {
             Statement st = this.getConnection().createStatement();
             String query = "insert into tour_guide(guide_name,guide_language,holidays_id) values('" + c.getGuide_name() + "','" + c.getGuide_language() + "'," + c.getHolidays().getHolidays_id() + ")";
             st.executeUpdate(query);
-         
+
             ResultSet rs = st.executeQuery("select max(tour_guide_id) as mid from tour_guide");
             rs.next();
             int tour_guide_id = rs.getInt("mid");
@@ -62,7 +62,7 @@ public class tour_guideDAO extends DBConnection {
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "update tour_guide set guide_name='" + c.getGuide_name() + "',guide_language='" + c.getGuide_language() + "',holidays_id="+c.getHolidays().getHolidays_id()+" where tour_guide_id=" + c.getTour_guide_id();
+            String query = "update tour_guide set guide_name='" + c.getGuide_name() + "',guide_language='" + c.getGuide_language() + "',holidays_id=" + c.getHolidays().getHolidays_id() + " where tour_guide_id=" + c.getTour_guide_id();
             st.executeUpdate(query);
             st.executeUpdate("delete from tur_oneri where tour_guide_id=" + c.getTour_guide_id());
             for (proposal prop : c.getProp()) {
@@ -76,22 +76,41 @@ public class tour_guideDAO extends DBConnection {
         }
     }
 
-    public List<tour_guide> getTour_guideList() {
+    public List<tour_guide> getTour_guideList(int page, int pageSize) {
         List<tour_guide> list = new ArrayList<>();
+
+        int start = (page - 1) * pageSize;
         try {
             Statement st = this.getConnection().createStatement();
 
-            String query = "select * from tour_guide order by tour_guide_id asc ";
+            String query = "select * from tour_guide order by tour_guide_id asc limit " + pageSize + " offset " + start;
+
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 holidays u = this.getHolidaysDao().findByID(rs.getInt("holidays_id"));
-                list.add(new tour_guide(rs.getInt("tour_guide_id"), rs.getString("guide_name"), rs.getString("guide_language"), this.getTourProposal(rs.getInt("tour_guide_id")),u));
+                list.add(new tour_guide(rs.getInt("tour_guide_id"), rs.getString("guide_name"), rs.getString("guide_language"), this.getTourProposal(rs.getInt("tour_guide_id")), u));
             }
-         
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+
+    public int count() {
+        int count = 0;
+        try {
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select count(tour_guide_id) as tour_guide_count from tour_guide ";
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            count = rs.getInt("tour_guide_count");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 
     public List<proposal> getTourProposal(int tour_guide_id) {
@@ -132,8 +151,5 @@ public class tour_guideDAO extends DBConnection {
     public void setHolidaysDao(holidaysDAO holidaysDao) {
         this.holidaysDao = holidaysDao;
     }
-
-   
- 
 
 }
